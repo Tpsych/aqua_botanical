@@ -1,7 +1,7 @@
 #Aqua Botanical System
 #Author: Barry Hao
 
-#Constant
+#Constants
 FEEDING_TANK_WATER_HIGH_LEVEL = 200
 FEEDING_TANK_WATER_MID_LEVEL = 150
 FEEDING_TANK_WATER_LOW_LEVEL = 100
@@ -12,10 +12,14 @@ HIGHER_ORP_THRESHOLD = 250 #mv
 LOWER_ORP_THRESHOLD = 200 #mv
 ABNORMAL_TIME_LIMIT = 5 #minute
 
-#Read from sensors
+#Read from perception sensors
 gFeedingTankWaterLevel = None
 gFilteringTankWaterLevel = None
 gORP = None
+gPH = None
+gTemperature = None
+gOxygen = None
+gSalt = None
 
 #Motor Boolean
 gFeedingTankMotor = False
