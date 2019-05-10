@@ -1,6 +1,7 @@
 #Aqua Botanical System
 #Author: Barry Hao, Tony Tsai
 #Multi thread?
+#Defition of the water level?
 
 #Constants
 FEEDING_TANK_WATER_HIGH_LEVEL = 200
