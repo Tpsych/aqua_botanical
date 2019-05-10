@@ -1,5 +1,6 @@
 #Aqua Botanical System
-#Author: Barry Hao
+#Author: Barry Hao, Tony Tsai
+#Multi thread?
 
 #Constants
 FEEDING_TANK_WATER_HIGH_LEVEL = 200
