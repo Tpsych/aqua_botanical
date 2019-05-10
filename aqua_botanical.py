@@ -29,7 +29,25 @@ gElectricalMagneticDoor = False
 gTimeElapsedFromAbnormalState = 0
 
 def circulate():
-    print("circulating")
+    print("Circulating")
+
+def orpPerception():
+    print("ORP perception")
+
+def phPerception():
+    print("PH perception")
+
+def temperaturePerception():
+    print("Temperature perception")
+
+def oxygenPerception():
+    print("Oxygen perception")
+
+def saltPerception():
+    print("Salt perception")
+
+def plantLightControl():
+    print("Light control for the plant")
 
 def operation():
     if gFeedingTankWaterLevel > FEEDING_TANK_WATER_HIGH_LEVEL and \
