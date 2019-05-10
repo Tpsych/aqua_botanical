@@ -2,6 +2,7 @@
 #Author: Barry Hao, Tony Tsai
 #Multi thread?
 #Defition of the water level?
+#Flow chart heater
 
 import time
 
@@ -56,6 +57,13 @@ def saltPerception():
 
 def plantLightControl():
     print("Light control for the plant")
+
+def pumpOxygen():
+    print("Pump Oxygen")
+
+#Turn on/off heater
+def heaterControl(command)
+    print("Heater control")
 
 #Get gFeedingTankWaterLevel and gFilteringTankWaterLevel
 def waterLevelDetection():
