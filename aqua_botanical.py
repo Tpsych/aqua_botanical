@@ -55,20 +55,17 @@ def saltPerception():
 def plantLightControl():
     print("Light control for the plant")
 
+#Get gFeedingTankWaterLevel and gFilteringTankWaterLevel
+def waterLevelDetection():
+    print("Water level detection")
+
 def operation():
-    if gFeedingTankWaterLevel > FEEDING_TANK_WATER_HIGH_LEVEL and \
-    gFilteringTankWaterLevel > FILTERING_TANK_WATER_HIGH_LEVEL:
-        gFeedingTankMotor = False
-        gFilteringTankMotor = False
-        gWaterFillingMotor = True
+    waterLevelDetection()
+    waterLevelJudgement()
 
 def main():
     print("Aqua Botanical System!")
-    if gORP > LOWER_ORP_THRESHOLD:
-        if gORP > HIGH_ORP_THRESHOLD:
-            operation()
-        else:
-            circulate()
+    operation()
 
 if __name__ == "__main__":
     main()
