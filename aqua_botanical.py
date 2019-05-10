@@ -15,8 +15,8 @@ LOWER_ORP_THRESHOLD = 200 #mv
 ABNORMAL_TIME_LIMIT = 5 #minute
 
 #Read from perception sensors
-gFeedingTankWaterLevel = None
-gFilteringTankWaterLevel = None
+gFeedingTankWaterLevel = None # 0 for low, 1 for mid, 2 for high
+gFilteringTankWaterLevel = None # 0 for low, 1 for mid, 2 for high
 gORP = None
 gPH = None
 gTemperature = None
@@ -58,6 +58,13 @@ def plantLightControl():
 #Get gFeedingTankWaterLevel and gFilteringTankWaterLevel
 def waterLevelDetection():
     print("Water level detection")
+
+#Turn on/off motors in feeding/filtering tank
+def motorControl(feedingMotor, filteringMotor)
+
+def waterLevelJudgement():
+    if gFeedingTankWaterLevel = 2 and gFilteringTankWaterLevel = 2:
+        MotorControl(0, 0)
 
 def operation():
     waterLevelDetection()
