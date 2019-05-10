@@ -22,12 +22,12 @@ gOxygen = None
 gSalt = None
 
 #Motor Boolean
-gFeedingTankMotor = False
-gFilteringTankMotor = False
-gWaterFillingMotor = False
+gFeedingTankMotorState = False
+gFilteringTankMotorState = False
+gWaterFillingMotorState = False
 
 #Electrical Magnetic Door
-gElectricalMagneticDoor = False
+gElectricalMagneticDoorState = False
 
 #Time elapsed since last abnormal state
 gTimeElapsedFromAbnormalState = 0
