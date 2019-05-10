@@ -61,14 +61,57 @@ def waterLevelDetection():
 
 #Turn on/off motors in feeding/filtering tank
 def motorControl(feedingMotor, filteringMotor)
+    print("Motor control")
 
-def waterLevelJudgement():
+#Turn on/off electrical Door
+def electricalMagneticDoor(command)
+    print("Electrical magnetic door")
+
+def waterLevelJudgementFirstStepInCirculation():
     if gFeedingTankWaterLevel = 2 and gFilteringTankWaterLevel = 2:
-        MotorControl(0, 0)
+        motorControl(0, 0)
+        electricalMagneticDoor(1)
+    elif gFeedingTankWaterLevel = 2 and gFilteringTankWaterLevel = 1:
+        motorControl(1, 0)
+    elif gFeedingTankWaterLevel = 2 and gFilteringTankWaterLevel = 0:
+        motorControl(1, 0)
+    elif gFeedingTankWaterLevel = 1 and gFilteringTankWaterLevel = 2:
+        motorControl(1, 0)
+    elif gFeedingTankWaterLevel = 1 and gFilteringTankWaterLevel = 1:
+        motorControl(1, 0)
+    elif gFeedingTankWaterLevel = 1 and gFilteringTankWaterLevel = 0:
+        motorControl(1, 0)
+    elif gFeedingTankWaterLevel = 0 and gFilteringTankWaterLevel = 2:
+        motorControl(1, 0)
+    elif gFeedingTankWaterLevel = 0 and gFilteringTankWaterLevel = 1:
+        motorControl(1, 0)
+    else:
+        motorControl(1, 0)
+
+def waterLevelJudgementSecondStepInCirculation():
+    if gFeedingTankWaterLevel = 2 and gFilteringTankWaterLevel = 2:
+        motorControl(0, 0)
+        electricalMagneticDoor(1)
+    elif gFeedingTankWaterLevel = 2 and gFilteringTankWaterLevel = 1:
+        motorControl(1, 0)
+    elif gFeedingTankWaterLevel = 2 and gFilteringTankWaterLevel = 0:
+        motorControl(1, 0)
+    elif gFeedingTankWaterLevel = 1 and gFilteringTankWaterLevel = 2:
+        motorControl(1, 0)
+    elif gFeedingTankWaterLevel = 1 and gFilteringTankWaterLevel = 1:
+        motorControl(1, 0)
+    elif gFeedingTankWaterLevel = 1 and gFilteringTankWaterLevel = 0:
+        motorControl(1, 0)
+    elif gFeedingTankWaterLevel = 0 and gFilteringTankWaterLevel = 2:
+        motorControl(1, 0)
+    elif gFeedingTankWaterLevel = 0 and gFilteringTankWaterLevel = 1:
+        motorControl(1, 0)
+    else:
+        motorControl(1, 0)
 
 def operation():
     waterLevelDetection()
-    waterLevelJudgement()
+    waterLevelJudgementFirstStepInCirculation()
 
 def main():
     print("Aqua Botanical System!")
