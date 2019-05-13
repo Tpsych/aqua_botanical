@@ -3,6 +3,7 @@
 #Multi thread?
 #Defition of the water level?
 #Flow chart heater
+#No sensor: wait for 30 minutes ?
 
 import time
 
