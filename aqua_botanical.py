@@ -1,9 +1,5 @@
 #Aqua Botanical System
 #Author: Barry Hao, Tony Tsai
-#Multi thread?
-#Defition of the water level?
-#Flow chart heater
-#No sensor: wait for 30 minutes ?
 
 import time
 
@@ -82,6 +78,13 @@ def fillingMotorControl(command)
 #Turn on/off electrical Door
 def electricalMagneticDoor(command)
     print("Electrical magnetic door")
+    timeout = time.time() + 5   # 5 seconds from now
+    while :
+        test = 0
+        if test == 5 or time.time() > timeout:
+            break
+        test = test - 1
+        waterLevelDetection()
 
 def waterLevelJudgementFirstStepInCirculation():
     if gFeedingTankWaterLevel = 2 and gFilteringTankWaterLevel = 2:
