@@ -119,6 +119,7 @@ def waterLevelJudgementFirstStepInCirculation():
         fillingMotorControl(1)
         checkFeedingTankWaterLevel(1)
         fillingMotorControl(0)
+    time.sleep(300) #circulate for 5 minutes
 
 def waterLevelJudgementSecondStepInCirculation():
     if gFeedingTankWaterLevel = 2 and gFilteringTankWaterLevel = 2:
@@ -149,6 +150,8 @@ def waterLevelJudgementSecondStepInCirculation():
 def operation():
     waterLevelDetection()
     waterLevelJudgementFirstStepInCirculation()
+    waterLevelDetection()
+    checkMidWaterLevel()
 
 def main():
     print("Aqua Botanical System!")
