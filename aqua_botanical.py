@@ -2,6 +2,7 @@
 #Author: Barry Hao, Tony Tsai
 
 import time
+import thread
 
 #Constants
 HIGH_ORP_THRESHOLD = 250 #mv
@@ -65,7 +66,7 @@ def pumpOxygen():
     print("Pump Oxygen")
 
 #Turn on/off heater
-def heaterControl(command)
+def heaterControl(command):
     print("Heater control")
 
 #Get gFeedingTankWaterLevel and gFilteringTankWaterLevel
@@ -73,16 +74,16 @@ def waterLevelDetection():
     print("Water level detection")
 
 #Turn on/off motors in feeding/filtering tank
-def motorControl(feedingMotorCommand, filteringMotorCommand)
+def motorControl(feedingMotorCommand, filteringMotorCommand):
     print("Motor control")
 
 #Turn/off filling motor
-def fillingMotorControl(command)
+def fillingMotorControl(command):
     print("Filling Motor Control")
     waterLevelDetection()
 
 #Turn on/off electrical Door
-def electricalMagneticDoor(command)
+def electricalMagneticDoor(command):
     print("Electrical magnetic door")
     timeout = time.time() + 5   # 5 seconds from now
     while :
@@ -92,10 +93,15 @@ def electricalMagneticDoor(command)
         test = test - 1
         waterLevelDetection()
 
+def checkFeedingTankWaterLevel(expectedLevel):
+    while gFeedingTankWaterLevel != expectedLevel:
+        waterLevelDetection()
+
 def waterLevelJudgementFirstStepInCirculation():
     if gFeedingTankWaterLevel = 2 and gFilteringTankWaterLevel = 2:
         motorControl(0, 0)
         electricalMagneticDoor(1)
+        checkFeedingTankWaterLevel(0)
     elif gFeedingTankWaterLevel = 2 and gFilteringTankWaterLevel = 1:
         motorControl(1, 0)
     elif gFeedingTankWaterLevel = 2 and gFilteringTankWaterLevel = 0:
@@ -113,11 +119,13 @@ def waterLevelJudgementFirstStepInCirculation():
     else:
         motorControl(0, 0)
         fillingMotorControl(1)
+        checkFeedingTankWaterLevel(1)
 
 def waterLevelJudgementSecondStepInCirculation():
     if gFeedingTankWaterLevel = 2 and gFilteringTankWaterLevel = 2:
         motorControl(0, 0)
         electricalMagneticDoor(1)
+        checkFeedingTankWaterLevel(0)
     elif gFeedingTankWaterLevel = 2 and gFilteringTankWaterLevel = 1:
         motorControl(1, 0)
     elif gFeedingTankWaterLevel = 2 and gFilteringTankWaterLevel = 0:
@@ -135,6 +143,7 @@ def waterLevelJudgementSecondStepInCirculation():
     else:
         motorControl(0, 0)
         fillingMotorControl(1)
+        checkFeedingTankWaterLevel(1)
 
 def operation():
     waterLevelDetection()
