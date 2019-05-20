@@ -85,23 +85,21 @@ def fillingMotorControl(command):
 #Turn on/off electrical Door
 def electricalMagneticDoor(command):
     print("Electrical magnetic door")
-    timeout = time.time() + 5   # 5 seconds from now
-    while :
-        test = 0
-        if test == 5 or time.time() > timeout:
-            break
-        test = test - 1
-        waterLevelDetection()
 
 def checkFeedingTankWaterLevel(expectedLevel):
     while gFeedingTankWaterLevel != expectedLevel:
         waterLevelDetection()
+        timeout = time.time() + 5   # 5 seconds from now
+        while:
+            if time.time() > timeout:
+                break
 
 def waterLevelJudgementFirstStepInCirculation():
     if gFeedingTankWaterLevel = 2 and gFilteringTankWaterLevel = 2:
         motorControl(0, 0)
         electricalMagneticDoor(1)
         checkFeedingTankWaterLevel(0)
+        electricalMagneticDoor(0)
     elif gFeedingTankWaterLevel = 2 and gFilteringTankWaterLevel = 1:
         motorControl(1, 0)
     elif gFeedingTankWaterLevel = 2 and gFilteringTankWaterLevel = 0:
@@ -120,12 +118,14 @@ def waterLevelJudgementFirstStepInCirculation():
         motorControl(0, 0)
         fillingMotorControl(1)
         checkFeedingTankWaterLevel(1)
+        fillingMotorControl(0)
 
 def waterLevelJudgementSecondStepInCirculation():
     if gFeedingTankWaterLevel = 2 and gFilteringTankWaterLevel = 2:
         motorControl(0, 0)
         electricalMagneticDoor(1)
         checkFeedingTankWaterLevel(0)
+        electricalMagneticDoor(0)
     elif gFeedingTankWaterLevel = 2 and gFilteringTankWaterLevel = 1:
         motorControl(1, 0)
     elif gFeedingTankWaterLevel = 2 and gFilteringTankWaterLevel = 0:
@@ -144,6 +144,7 @@ def waterLevelJudgementSecondStepInCirculation():
         motorControl(0, 0)
         fillingMotorControl(1)
         checkFeedingTankWaterLevel(1)
+        fillingMotorControl(0)
 
 def operation():
     waterLevelDetection()
