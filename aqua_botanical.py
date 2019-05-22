@@ -146,19 +146,25 @@ def waterLevelJudgementSecondStepInCirculation():
 def operation():
     waterLevelDetection()
     waterLevelJudgementFirstStepInCirculation()
-    timeout = time.time() + 5 # 5 seconds from now
-    while:
-        if time.time() > timeout:
-            break
 
 def sensorPerception()
-    
+    sensorState = True
+    sensorState = orpPerception()
+    sensorState = phPerception()
+    sensorState = temperaturePerception()
+    sensorState = saltPerception()
+    sensorState = oxygenPerception()
+    return sensorState
 
 def main():
     print("Aqua Botanical System!")
-    timeout = time.time() + 150; # 30 minutes
-    sensorPerception()
-    operation()
+    timeout = time.time() + 1800 # 30 minutes
+    sensorState = sensorPerception()
+    while time.time() < timeout and sensorState = True:
+        sensorPerception()
+    timeout = time.time() + 300 # 5 minutes
+    while time.time() < timeout:
+        operation()
 
 if __name__ == "__main__":
     main()
