@@ -41,9 +41,6 @@ gElectricalMagneticDoorState = False
 #Time elapsed since last abnormal state
 gTimeElapsedFromAbnormalState = 0
 
-def circulate():
-    print("Circulating")
-
 def orpPerception():
     print("ORP perception")
 
@@ -143,7 +140,7 @@ def waterLevelJudgementSecondStepInCirculation():
         checkFeedingTankWaterLevel(1)
         fillingMotorControl(0)
 
-def operation():
+def circulation():
     waterLevelDetection()
     waterLevelJudgementFirstStepInCirculation()
 
@@ -164,7 +161,11 @@ def main():
         sensorPerception()
     timeout = time.time() + 300 # 5 minutes
     while time.time() < timeout:
-        operation()
+        circulation()
+    waterLevelDetection()
+    while gFeedingTankWaterLevel != 1 and gFilteringTankWaterLevel != 1:
+        waterLevelJudgementSecondStepInCirculation
+    motorControl(0, 0)
 
 if __name__ == "__main__":
     main()
