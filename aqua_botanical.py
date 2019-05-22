@@ -89,24 +89,24 @@ def checkFeedingTankWaterLevel(expectedLevel):
         time.sleep(5)
 
 def waterLevelJudgementFirstStepInCirculation():
-    if gFeedingTankWaterLevel = 2 and gFilteringTankWaterLevel = 2:
+    if gFeedingTankWaterLevel == 2 and gFilteringTankWaterLevel == 2:
         motorControl(0, 0)
         electricalMagneticDoor(1)
         checkFeedingTankWaterLevel(0)
         electricalMagneticDoor(0)
-    elif gFeedingTankWaterLevel = 2 and gFilteringTankWaterLevel = 1:
+    elif gFeedingTankWaterLevel == 2 and gFilteringTankWaterLevel == 1:
         motorControl(1, 0)
-    elif gFeedingTankWaterLevel = 2 and gFilteringTankWaterLevel = 0:
+    elif gFeedingTankWaterLevel == 2 and gFilteringTankWaterLevel == 0:
         motorControl(1, 0)
-    elif gFeedingTankWaterLevel = 1 and gFilteringTankWaterLevel = 2:
+    elif gFeedingTankWaterLevel == 1 and gFilteringTankWaterLevel == 2:
         motorControl(0, 1)
-    elif gFeedingTankWaterLevel = 1 and gFilteringTankWaterLevel = 1:
+    elif gFeedingTankWaterLevel == 1 and gFilteringTankWaterLevel == 1:
         motorControl(1, 0)
-    elif gFeedingTankWaterLevel = 1 and gFilteringTankWaterLevel = 0:
+    elif gFeedingTankWaterLevel == 1 and gFilteringTankWaterLevel == 0:
         motorControl(1, 0)
-    elif gFeedingTankWaterLevel = 0 and gFilteringTankWaterLevel = 2:
+    elif gFeedingTankWaterLevel == 0 and gFilteringTankWaterLevel == 2:
         motorControl(0, 1)
-    elif gFeedingTankWaterLevel = 0 and gFilteringTankWaterLevel = 1:
+    elif gFeedingTankWaterLevel == 0 and gFilteringTankWaterLevel == 1:
         motorControl(0, 1)
     else:
         motorControl(0, 0)
@@ -115,24 +115,24 @@ def waterLevelJudgementFirstStepInCirculation():
         fillingMotorControl(0)
 
 def waterLevelJudgementSecondStepInCirculation():
-    if gFeedingTankWaterLevel = 2 and gFilteringTankWaterLevel = 2:
+    if gFeedingTankWaterLevel == 2 and gFilteringTankWaterLevel == 2:
         motorControl(0, 0)
         electricalMagneticDoor(1)
         checkFeedingTankWaterLevel(0)
         electricalMagneticDoor(0)
-    elif gFeedingTankWaterLevel = 2 and gFilteringTankWaterLevel = 1:
+    elif gFeedingTankWaterLevel == 2 and gFilteringTankWaterLevel == 1:
         motorControl(1, 0)
-    elif gFeedingTankWaterLevel = 2 and gFilteringTankWaterLevel = 0:
+    elif gFeedingTankWaterLevel == 2 and gFilteringTankWaterLevel == 0:
         motorControl(1, 0)
-    elif gFeedingTankWaterLevel = 1 and gFilteringTankWaterLevel = 2:
+    elif gFeedingTankWaterLevel == 1 and gFilteringTankWaterLevel == 2:
         motorControl(0, 1)
-    elif gFeedingTankWaterLevel = 1 and gFilteringTankWaterLevel = 1:
+    elif gFeedingTankWaterLevel == 1 and gFilteringTankWaterLevel == 1:
         motorControl(0, 0)
-    elif gFeedingTankWaterLevel = 1 and gFilteringTankWaterLevel = 0:
+    elif gFeedingTankWaterLevel == 1 and gFilteringTankWaterLevel == 0:
         motorControl(1, 0)
-    elif gFeedingTankWaterLevel = 0 and gFilteringTankWaterLevel = 2:
+    elif gFeedingTankWaterLevel == 0 and gFilteringTankWaterLevel == 2:
         motorControl(0, 1)
-    elif gFeedingTankWaterLevel = 0 and gFilteringTankWaterLevel = 1:
+    elif gFeedingTankWaterLevel == 0 and gFilteringTankWaterLevel == 1:
         motorControl(0, 1)
     else:
         motorControl(0, 0)
@@ -144,7 +144,7 @@ def circulation():
     waterLevelDetection()
     waterLevelJudgementFirstStepInCirculation()
 
-def sensorPerception()
+def sensorPerception():
     sensorState = True
     sensorState = orpPerception()
     sensorState = phPerception()
@@ -154,18 +154,19 @@ def sensorPerception()
     return sensorState
 
 def main():
-    print("Aqua Botanical System!")
-    timeout = time.time() + 1800 # 30 minutes
-    sensorState = sensorPerception()
-    while time.time() < timeout and sensorState = True:
-        sensorPerception()
-    timeout = time.time() + 300 # 5 minutes
-    while time.time() < timeout:
-        circulation()
-    waterLevelDetection()
-    while gFeedingTankWaterLevel != 1 and gFilteringTankWaterLevel != 1:
-        waterLevelJudgementSecondStepInCirculation
-    motorControl(0, 0)
+    while True:
+        print("Aqua Botanical System!")
+        timeout = time.time() + 1800 # 30 minutes
+        sensorState = sensorPerception()
+        while time.time() < timeout and sensorState == True:
+            sensorPerception()
+        timeout = time.time() + 300 # 5 minutes
+        while time.time() < timeout:
+            circulation()
+        waterLevelDetection()
+        while gFeedingTankWaterLevel != 1 and gFilteringTankWaterLevel != 1:
+            waterLevelJudgementSecondStepInCirculation
+        motorControl(0, 0)
 
 if __name__ == "__main__":
     main()
