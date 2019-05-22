@@ -89,10 +89,7 @@ def electricalMagneticDoor(command):
 def checkFeedingTankWaterLevel(expectedLevel):
     while gFeedingTankWaterLevel != expectedLevel:
         waterLevelDetection()
-        timeout = time.time() + 5   # 5 seconds from now
-        while:
-            if time.time() > timeout:
-                break
+        time.sleep(5)
 
 def waterLevelJudgementFirstStepInCirculation():
     if gFeedingTankWaterLevel = 2 and gFilteringTankWaterLevel = 2:
@@ -119,7 +116,6 @@ def waterLevelJudgementFirstStepInCirculation():
         fillingMotorControl(1)
         checkFeedingTankWaterLevel(1)
         fillingMotorControl(0)
-    time.sleep(300) #circulate for 5 minutes
 
 def waterLevelJudgementSecondStepInCirculation():
     if gFeedingTankWaterLevel = 2 and gFilteringTankWaterLevel = 2:
@@ -150,11 +146,18 @@ def waterLevelJudgementSecondStepInCirculation():
 def operation():
     waterLevelDetection()
     waterLevelJudgementFirstStepInCirculation()
-    waterLevelDetection()
-    checkMidWaterLevel()
+    timeout = time.time() + 5 # 5 seconds from now
+    while:
+        if time.time() > timeout:
+            break
+
+def sensorPerception()
+    
 
 def main():
     print("Aqua Botanical System!")
+    timeout = time.time() + 150; # 30 minutes
+    sensorPerception()
     operation()
 
 if __name__ == "__main__":
