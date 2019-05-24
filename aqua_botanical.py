@@ -23,7 +23,7 @@ ABNORMAL_TIME_LIMIT = 5 #minute
 #Read from perception sensors
 gFeedingTankWaterLevel = None # 0 for low, 1 for mid, 2 for high
 gFilteringTankWaterLevel = None # 0 for low, 1 for mid, 2 for high
-gORP = None
+gORP = 199
 gPH = None
 gTemperature = None
 gOxygen = None
@@ -56,19 +56,42 @@ def warningForLowSalt():
     warningBuzzer(0)
 
 def orpPerception():
-    print("ORP perception")
+    print("ORP perception, the orp value now is:")
+    print(gORP)
+    # Get sensor value here
+    if gORP < LOW_ORP_THRESHOLD:
+        gAbnormalState['abnormalORP'] = True
 
 def phPerception():
-    print("PH perception")
+    print("PH perception, the ph value now is:")
+    print(gPH)
+    # Get sensor value here
+    if gPH > HIGH_PH_THRESHOLD_1 or \
+    gPH < LOW_PH_THRESHOLD_1:
+        gAbnormalState['abnormalPH'] = True
 
 def temperaturePerception():
-    print("Temperature perception")
+    print("Temperature perception, the temperature value now is:")
+    print(gTemperature)
+    # Get sensor value here
+    if gTemperature > HIGH_TEMPERATURE_THRESHOLD or \
+    gTemperature < LOW_TEMPERATURE_THRESHOLD:
+        gAbnormalState['abnormalTemperature'] = True
 
 def oxygenPerception():
-    print("Oxygen perception")
+    print("Oxygen perception, the oxygen value now is:")
+    print(gOxygen)
+    # Get sensor value here
+    if gOxygen < LOW_OXYGEN_THRESHOLD:
+        gAbnormalState['abnormalOxygen'] = True
 
 def saltPerception():
-    print("Salt perception")
+    print("Salt perception, the salt value now is:")
+    print(gSalt)
+    # Get sensor value here
+    if gSalt > HIGH_SALT_THRESHOLD or \
+    gSalt < LOW_SALT_THRESHOLD:
+        gAbnormalState['abnormalSalt'] = True
 
 def plantLightControl():
     print("Light control for the plant")
