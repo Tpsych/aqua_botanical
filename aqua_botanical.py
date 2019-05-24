@@ -2,7 +2,6 @@
 #Author: Barry Hao, Tony Tsai
 
 import time
-import Queue
 
 #Constants
 HIGH_ORP_THRESHOLD = 250 #mv
