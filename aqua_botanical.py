@@ -23,7 +23,7 @@ ABNORMAL_TIME_LIMIT = 5 #minute
 #Read from perception sensors
 gFeedingTankWaterLevel = None # 0 for low, 1 for mid, 2 for high
 gFilteringTankWaterLevel = None # 0 for low, 1 for mid, 2 for high
-gORP = 199
+gORP = None
 gPH = None
 gTemperature = None
 gOxygen = None
