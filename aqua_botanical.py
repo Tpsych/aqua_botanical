@@ -156,6 +156,20 @@ def sensorPerception():
     saltPerception()
     oxygenPerception()
 
+def temperatureOperation():
+    if gTemperature > HIGH_TEMPERATURE_THRESHOLD:
+        while gTemperature > MID_TEMPERATURE_THRESHOLD:
+            circulation()
+            time.sleep(5) # Circulate every 5 seconds
+            temperaturePerception()
+
+    if gTemperature < LOW_TEMPERATURE_THRESHOLD:
+        while gTemperature < MID_TEMPERATURE_THRESHOLD:
+            heaterControl(1)
+            time.sleep(10) # Check every 10 seconds
+            temperaturePerception()
+        heaterControl(0)
+
 def sensorOperation(abnormalSensor):
     print("Abnormal State Operation")
     if gAbnormalState['abnormalORP'] == True:
@@ -196,6 +210,7 @@ def main():
             break
         timeout = time.time() + 300 # 5 minutes
         while time.time() < timeout:
+            time.sleep(5)
             circulation()
         waterLevelDetection()
         while gFeedingTankWaterLevel != 1 and gFilteringTankWaterLevel != 1:
