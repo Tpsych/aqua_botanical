@@ -46,6 +46,15 @@ gAbnormalState = dict(
     abnormalSalt = False
 )
 
+def warningBuzzer(command)
+    print("Warning buzzer")
+
+def warningForLowSalt():
+    print("Warning for low salt")
+    warningBuzzer(1)
+    time.sleep(10)
+    warningBuzzer(0)
+
 def orpPerception():
     print("ORP perception")
 
@@ -176,6 +185,20 @@ def oxygenOperation():
             time.sleep(10) # Pump oxygen for 10 seconds
             oxygenPerception()
         pumpOxygen(0)
+
+def saltOperation():
+    if gSalt > HIGH_SALT_THRESHOLD:
+        while gSalt > MID_SALT_THRESHOLD:
+            circulation()
+            time.sleep(5) # Circulate every 5 seconds
+            saltPerception()
+
+    if gSalt < LOW_SALT_THRESHOLD:
+        warningForLowSalt()
+        while gSalt < MID_SALT_THRESHOLD:
+            warningForLowSalt()
+            time.sleep(10) # Check every 10 seconds
+            saltPerception()
 
 def sensorOperation(abnormalSensor):
     print("Abnormal State Operation")
