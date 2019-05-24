@@ -2,10 +2,9 @@
 #Author: Barry Hao, Tony Tsai
 
 import time
-import queue
+import Queue
 
 #Constants
-NORMAL_STATE = 0
 ABNORMAL_ORP = 1
 ABNORMAL_PH = 2
 ABNORMAL_TEMPERATURE = 3
@@ -45,7 +44,7 @@ gWaterFillingMotorState = False
 gElectricalMagneticDoorState = False
 
 #Global queue for storing abnormal sensor
-gQueueForAbnormalSensor = queue.Queue(maxsize = 20)
+gQueueForAbnormalSensor = Queue.Queue()
 
 def orpPerception():
     print("ORP perception")
@@ -156,7 +155,6 @@ def sensorPerception():
     temperaturePerception()
     saltPerception()
     oxygenPerception()
-    if gQueueForAbnormalSensor
 
     return sensorState
 def sensorOperation(abnormalSensor)
@@ -165,14 +163,19 @@ def sensorOperation(abnormalSensor)
 def main():
     while True:
         print("Aqua Botanical System!")
+        restartAfterSensorOperation = False
         timeout = time.time() + 1800 # 30 minutes
-        sensorState = sensorPerception()
         while time.time() < timeout:
             # Should create a queue for all abnormal state
-            if sensorState == NORMAL_STATE:
-                sensorState = sensorPerception()
+            if gQueueForAbnormalSensor.qsize() == 0:
+                time.sleep(5) # delay for 5 seconds
+                sensorPerception()
             else:
-                sensorOperation(sensorState)
+                sensorOperation()
+                restartAfterSensorOperation = True
+                break
+        if restartAfterSensorOperation:
+            break
         timeout = time.time() + 300 # 5 minutes
         while time.time() < timeout:
             circulation()
