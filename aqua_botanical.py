@@ -64,7 +64,7 @@ def saltPerception():
 def plantLightControl():
     print("Light control for the plant")
 
-def pumpOxygen():
+def pumpOxygen(command):
     print("Pump Oxygen")
 
 #Turn on/off heater
@@ -164,11 +164,18 @@ def temperatureOperation():
             temperaturePerception()
 
     if gTemperature < LOW_TEMPERATURE_THRESHOLD:
+        heaterControl(1)
         while gTemperature < MID_TEMPERATURE_THRESHOLD:
-            heaterControl(1)
             time.sleep(10) # Check every 10 seconds
             temperaturePerception()
         heaterControl(0)
+def oxygenOperation():
+    if gOxygen < LOW_OXYGEN_THRESHOLD:
+        pumpOxygen(1)
+        while gOxygen < HIGH_OXYGEN_THRESHOLD:
+            time.sleep(10) # Pump oxygen for 10 seconds
+            oxygenPerception()
+        pumpOxygen(0)
 
 def sensorOperation(abnormalSensor):
     print("Abnormal State Operation")
