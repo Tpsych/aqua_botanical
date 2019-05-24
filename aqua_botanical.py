@@ -206,7 +206,7 @@ def saltOperation():
             time.sleep(10) # Check every 10 seconds
             saltPerception()
 
-def phOperation()
+def phOperation():
     if gPH > HIGH_PH_THRESHOLD_1 or \
     gPH < LOW_PH_THRESHOLD_1:
         timeout = time.time() + 300
@@ -216,6 +216,14 @@ def phOperation()
             circulation()
             time.sleep(5)
             phPerception()
+
+def orpOperation():
+    if gORP < Low_ORP_THRESHOLD:
+        timeout = time.time() + 300
+        while gORP < MID_ORP_THRESHOLD and \
+        time.time() < timeout:
+            time.sleep(10) # Check every 10 seconds
+            orpPerception()
 
 def sensorOperation(abnormalSensor):
     print("Abnormal State Operation")
