@@ -46,7 +46,7 @@ gAbnormalState = dict(
     abnormalSalt = False
 )
 
-def warningBuzzer(command)
+def warningBuzzer(command):
     print("Warning buzzer")
 
 def warningForLowSalt():
@@ -167,14 +167,18 @@ def sensorPerception():
 
 def temperatureOperation():
     if gTemperature > HIGH_TEMPERATURE_THRESHOLD:
-        while gTemperature > MID_TEMPERATURE_THRESHOLD:
+        timeout = time.time() + 300
+        while gTemperature > MID_TEMPERATURE_THRESHOLD and \
+        time.time() < timeout:
             circulation()
             time.sleep(5) # Circulate every 5 seconds
             temperaturePerception()
 
     if gTemperature < LOW_TEMPERATURE_THRESHOLD:
+        timeout = time.time() + 300
         heaterControl(1)
-        while gTemperature < MID_TEMPERATURE_THRESHOLD:
+        while gTemperature < MID_TEMPERATURE_THRESHOLD and \
+        time.time() < timeout:
             time.sleep(10) # Check every 10 seconds
             temperaturePerception()
         heaterControl(0)
@@ -188,7 +192,9 @@ def oxygenOperation():
 
 def saltOperation():
     if gSalt > HIGH_SALT_THRESHOLD:
-        while gSalt > MID_SALT_THRESHOLD:
+        timeout = time.time() + 300
+        while gSalt > MID_SALT_THRESHOLD and \
+        time.time() < timeout:
             circulation()
             time.sleep(5) # Circulate every 5 seconds
             saltPerception()
