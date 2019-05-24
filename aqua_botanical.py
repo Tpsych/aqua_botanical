@@ -2,9 +2,15 @@
 #Author: Barry Hao, Tony Tsai
 
 import time
-import thread
+import queue
 
 #Constants
+NORMAL_STATE = 0
+ABNORMAL_ORP = 1
+ABNORMAL_PH = 2
+ABNORMAL_TEMPERATURE = 3
+ABNORMAL_OXYGEN = 4
+ABNORMAL_SALT = 5
 HIGH_ORP_THRESHOLD = 250 #mv
 LOW_ORP_THRESHOLD = 200 #mv
 HIGH_PH_THRESHOLD_1 = 8.5
@@ -38,8 +44,8 @@ gWaterFillingMotorState = False
 #Electrical Magnetic Door
 gElectricalMagneticDoorState = False
 
-#Time elapsed since last abnormal state
-gTimeElapsedFromAbnormalState = 0
+#Global queue for storing abnormal sensor
+gQueueForAbnormalSensor = queue.Queue(maxsize = 20)
 
 def orpPerception():
     print("ORP perception")
@@ -145,27 +151,34 @@ def circulation():
     waterLevelJudgementFirstStepInCirculation()
 
 def sensorPerception():
-    sensorState = True
-    sensorState = orpPerception()
-    sensorState = phPerception()
-    sensorState = temperaturePerception()
-    sensorState = saltPerception()
-    sensorState = oxygenPerception()
+    orpPerception()
+    phPerception()
+    temperaturePerception()
+    saltPerception()
+    oxygenPerception()
+    if gQueueForAbnormalSensor
+
     return sensorState
+def sensorOperation(abnormalSensor)
+    print("Abnormal State Operation")
 
 def main():
     while True:
         print("Aqua Botanical System!")
         timeout = time.time() + 1800 # 30 minutes
         sensorState = sensorPerception()
-        while time.time() < timeout and sensorState == True:
-            sensorPerception()
+        while time.time() < timeout:
+            # Should create a queue for all abnormal state
+            if sensorState == NORMAL_STATE:
+                sensorState = sensorPerception()
+            else:
+                sensorOperation(sensorState)
         timeout = time.time() + 300 # 5 minutes
         while time.time() < timeout:
             circulation()
         waterLevelDetection()
         while gFeedingTankWaterLevel != 1 and gFilteringTankWaterLevel != 1:
-            waterLevelJudgementSecondStepInCirculation
+            waterLevelJudgementSecondStepInCirculation()
         motorControl(0, 0)
 
 if __name__ == "__main__":
