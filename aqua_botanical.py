@@ -159,6 +159,21 @@ def sensorPerception():
 
 def sensorOperation(abnormalSensor):
     print("Abnormal State Operation")
+    if gAbnormalState['abnormalORP'] == True:
+        orpOperation()
+        gAbnormalState['abnormalORP'] = False
+    if gAbnormalState['abnormalPH'] == True:
+        phOperation()
+        gAbnormalState['abnormalPH'] = False
+    if gAbnormalState['abnormalTemperature'] == True:
+        temperatureOperation()
+        gAbnormalState['abnormalTemperature'] = False
+    if gAbnormalState['abnormalOxygen'] == True:
+        oxygenOperation()
+        gAbnormalState['abnormalOxygen'] = False
+    if gAbnormalState['abnormalSalt'] == True:
+        saltOperation()
+        gAbnormalState['abnormalSalt'] = False
 
 def main():
     while True:
