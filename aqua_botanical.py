@@ -5,11 +5,6 @@ import time
 import Queue
 
 #Constants
-ABNORMAL_ORP = 1
-ABNORMAL_PH = 2
-ABNORMAL_TEMPERATURE = 3
-ABNORMAL_OXYGEN = 4
-ABNORMAL_SALT = 5
 HIGH_ORP_THRESHOLD = 250 #mv
 LOW_ORP_THRESHOLD = 200 #mv
 HIGH_PH_THRESHOLD_1 = 8.5
@@ -43,8 +38,14 @@ gWaterFillingMotorState = False
 #Electrical Magnetic Door
 gElectricalMagneticDoorState = False
 
-#Global queue for storing abnormal sensor
-gQueueForAbnormalSensor = Queue.Queue()
+#Global table for storing abnormal sensor
+gAbnormalState = dict(
+    abnormalORP = False,
+    abnormalPH = False,
+    abnormalTemperature = False,
+    abnormalOxygen = False,
+    abnormalSalt = False
+)
 
 def orpPerception():
     print("ORP perception")
@@ -156,8 +157,7 @@ def sensorPerception():
     saltPerception()
     oxygenPerception()
 
-    return sensorState
-def sensorOperation(abnormalSensor)
+def sensorOperation(abnormalSensor):
     print("Abnormal State Operation")
 
 def main():
@@ -167,7 +167,11 @@ def main():
         timeout = time.time() + 1800 # 30 minutes
         while time.time() < timeout:
             # Should create a queue for all abnormal state
-            if gQueueForAbnormalSensor.qsize() == 0:
+            if gAbnormalState['abnormalORP'] == False and \
+            gAbnormalState['abnormalPH'] == False and \
+            gAbnormalState['abnormalTemperature'] == False and \
+            gAbnormalState['abnormalOxygen'] == False and \
+            gAbnormalState['abnormalSalt'] == False:
                 time.sleep(5) # delay for 5 seconds
                 sensorPerception()
             else:
@@ -182,6 +186,7 @@ def main():
         waterLevelDetection()
         while gFeedingTankWaterLevel != 1 and gFilteringTankWaterLevel != 1:
             waterLevelJudgementSecondStepInCirculation()
+            waterLevelDetection()
         motorControl(0, 0)
 
 if __name__ == "__main__":
