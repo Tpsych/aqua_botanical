@@ -248,7 +248,7 @@ def phOperation():
         gAbnormalState['abnormalPH'] = False
 
 def orpOperation():
-    if gORP < Low_ORP_THRESHOLD:
+    if gORP < LOW_ORP_THRESHOLD:
         timeout = time.time() + 300
         while gORP < MID_ORP_THRESHOLD and \
         time.time() < timeout:
@@ -256,7 +256,7 @@ def orpOperation():
             orpPerception()
         gAbnormalState['abnormalORP'] = False
 
-def sensorOperation(abnormalSensor):
+def sensorOperation():
     print("Abnormal State Operation")
     if gAbnormalState['abnormalORP'] == True:
         orpOperation()
