@@ -278,7 +278,7 @@ def main():
             gAbnormalState['abnormalTemperature'] == False and \
             gAbnormalState['abnormalOxygen'] == False and \
             gAbnormalState['abnormalSalt'] == False:
-                time.sleep(5) # delay for 5 seconds
+                time.sleep(10) # delay for 5 seconds
                 sensorPerception()
             else:
                 sensorOperation()
@@ -288,11 +288,12 @@ def main():
             break
         timeout = time.time() + 300 # 5 minutes
         while time.time() < timeout:
-            time.sleep(5)
+            time.sleep(10)
             circulation()
         waterLevelDetection()
         while gFeedingTankWaterLevel != 1 and gFilteringTankWaterLevel != 1:
             waterLevelJudgementSecondStepInCirculation()
+            time.sleep(10)
             waterLevelDetection()
         motorControl(0, 0)
 
