@@ -196,6 +196,7 @@ def temperatureOperation():
             circulation()
             time.sleep(5) # Circulate every 5 seconds
             temperaturePerception()
+        gAbnormalState['abnormalTemperature'] = False
 
     if gTemperature < LOW_TEMPERATURE_THRESHOLD:
         timeout = time.time() + 300
@@ -205,6 +206,8 @@ def temperatureOperation():
             time.sleep(10) # Check every 10 seconds
             temperaturePerception()
         heaterControl(0)
+        gAbnormalState['abnormalTemperature'] = False
+
 def oxygenOperation():
     if gOxygen < LOW_OXYGEN_THRESHOLD:
         pumpOxygen(1)
@@ -212,6 +215,7 @@ def oxygenOperation():
             time.sleep(10) # Pump oxygen for 10 seconds
             oxygenPerception()
         pumpOxygen(0)
+        gAbnormalState['abnormalOxygen'] = False
 
 def saltOperation():
     if gSalt > HIGH_SALT_THRESHOLD:
@@ -221,6 +225,7 @@ def saltOperation():
             circulation()
             time.sleep(5) # Circulate every 5 seconds
             saltPerception()
+        gAbnormalState['abnormalSalt'] = False
 
     if gSalt < LOW_SALT_THRESHOLD:
         warningForLowSalt()
@@ -228,6 +233,7 @@ def saltOperation():
             warningForLowSalt()
             time.sleep(10) # Check every 10 seconds
             saltPerception()
+        gAbnormalState['abnormalSalt'] = False
 
 def phOperation():
     if gPH > HIGH_PH_THRESHOLD_1 or \
@@ -239,6 +245,7 @@ def phOperation():
             circulation()
             time.sleep(5)
             phPerception()
+        gAbnormalState['abnormalPH'] = False
 
 def orpOperation():
     if gORP < Low_ORP_THRESHOLD:
@@ -247,6 +254,7 @@ def orpOperation():
         time.time() < timeout:
             time.sleep(10) # Check every 10 seconds
             orpPerception()
+        gAbnormalState['abnormalORP'] = False
 
 def sensorOperation(abnormalSensor):
     print("Abnormal State Operation")
