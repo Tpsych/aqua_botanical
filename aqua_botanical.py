@@ -29,11 +29,6 @@ gTemperature = None
 gOxygen = None
 gSalt = None
 
-#Motor Boolean
-gFeedingTankMotorState = False
-gFilteringTankMotorState = False
-gWaterFillingMotorState = False
-
 #Electrical Magnetic Door
 gElectricalMagneticDoorState = False
 
