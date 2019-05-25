@@ -189,6 +189,7 @@ def sensorPerception():
     oxygenPerception()
 
 def temperatureOperation():
+    global gTemperature
     if gTemperature > HIGH_TEMPERATURE_THRESHOLD:
         timeout = time.time() + 300
         while gTemperature > MID_TEMPERATURE_THRESHOLD and \
@@ -209,6 +210,7 @@ def temperatureOperation():
         gAbnormalState['abnormalTemperature'] = False
 
 def oxygenOperation():
+    global gOxygen
     if gOxygen < LOW_OXYGEN_THRESHOLD:
         pumpOxygen(1)
         while gOxygen < HIGH_OXYGEN_THRESHOLD:
@@ -218,6 +220,7 @@ def oxygenOperation():
         gAbnormalState['abnormalOxygen'] = False
 
 def saltOperation():
+    global gSalt
     if gSalt > HIGH_SALT_THRESHOLD:
         timeout = time.time() + 300
         while gSalt > MID_SALT_THRESHOLD and \
@@ -236,6 +239,7 @@ def saltOperation():
         gAbnormalState['abnormalSalt'] = False
 
 def phOperation():
+    global gPH
     if gPH > HIGH_PH_THRESHOLD_1 or \
     gPH < LOW_PH_THRESHOLD_1:
         timeout = time.time() + 300
@@ -248,9 +252,10 @@ def phOperation():
         gAbnormalState['abnormalPH'] = False
 
 def orpOperation():
+    global gORP
     if gORP < LOW_ORP_THRESHOLD:
         timeout = time.time() + 300
-        while gORP < MID_ORP_THRESHOLD and \
+        while gORP < HIGH_ORP_THRESHOLD and \
         time.time() < timeout:
             time.sleep(10) # Check every 10 seconds
             orpPerception()
