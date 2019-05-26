@@ -21,6 +21,22 @@ class Modbus:
     def optionalWrite(self, request):
         return self.instrument._performCommand(6, request)
 
+    def checkIOBoardType(self,registeraddress):
+        # box address is 224~235
+        request = '\x00'
+        request += chr(int(registeraddress))
+        request += '\x00\x04'
+        answer = self.instrument._performCommand(3, request)
+
+        if answer == None:
+            return
+        else:
+            IOBoardType = []
+            for i in answer:
+                IOBoardType.append(hex(ord(i)))
+
+            return IOBoardType
+
     def sensorON(self, registeraddress):
         request = '\x00'
         request += chr(int(registeraddress))

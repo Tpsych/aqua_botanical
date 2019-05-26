@@ -62,18 +62,43 @@ class Monitor:
         return self.modbus.registerWrite(self.actuators_id.magnetic_door, value)
 
 def operation():
-    port_name = '/dev/tty.usbserial-DN03VH4V'
-    baudrate = 9600
-    box_id = 99
-    sensors_id = SensorAssignment(1, 2, 3, 4, 5, 6)
-    actuators_id = ActuatorAssignment(7, 8, 9, 10, 11, 12)
-    monitor1 = Monitor(port_name, baudrate, box_id, sensors_id, actuators_id)
+    # communication setting
+    PORT_NAME = '/dev/tty.usbserial-DN03VH4V'
+    BAUDRATE = 9600
+
+    # part id
+    BOX_ID = 99
+    ORP_ID = 1
+    PH_ID = 2
+    TEMP_ID = 3
+    OXYGEN_ID = 4
+    SALT_ID = 5
+    WATER_ID = 6
+    PUMP_ID = 7
+    HEATER_ID = 8
+    FEEDIND_MOTOR_ID = 9
+    FILTERING_MOTOR_ID = 10
+    FILLING_MOTOR_ID = 11
+    MAGNETIC_DOOR_ID = 12
+
+    sensors_id = SensorAssignment(ORP_ID, PH_ID, TEMP_ID, OXYGEN_ID, SALT_ID, WATER_ID)
+    actuators_id = ActuatorAssignment(PUMP_ID, HEATER_ID, FEEDIND_MOTOR_ID, FILTERING_MOTOR_ID, FILLING_MOTOR_ID, MAGNETIC_DOOR_ID)
+    monitor1 = Monitor(PORT_NAME, BAUDRATE, BOX_ID, sensors_id, actuators_id)
 
     # # test{
     #
     # monitor1.sensorOFF(9)
     # testValue = 585
+    # monitor1.modbus.sensorOFF(9)
     # testAnswer = monitor1.modbus.registerWrite(10, 369869868)
+    answer = monitor1.modbus.checkIOBoardType(0xE0)
+
+    if answer == None:
+        print("No answer")
+    else:
+        for i in answer:
+            print(i)
+
     # monitor1.readORP()
     # monitor1.readPH()
     # monitor1.readtemp()
