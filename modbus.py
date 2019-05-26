@@ -50,4 +50,6 @@ class Modbus:
             request += chr(int(value%256))
 
             print("output value:",value)
+            print("(hex)dataH:",hex(int(value/256)))
+            print("(hex)dataL:",hex(int(value%256)))
             return self.instrument._performCommand(6, request)
