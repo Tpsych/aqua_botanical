@@ -6,15 +6,21 @@ import serial
 import math
 import time
 
+def twos_complement(hexstr,bits):
+     value = int(hexstr,16)
+     if value & (1 << (bits-1)):
+         value -= 1 << bits
+     return value
+
 class Modbus:
     def __init__(self, port_name, baudrate, box_ID):
         modbus_library.BAUDRATE = baudrate
         self.instrument = modbus_library.Instrument(port_name, box_ID, mode ='rtu')
-        self.instrument.debug = True
+        self.instrument.debug = False
         self.instrument.serial.bytesize = 8
         self.instrument.serial.parity   = serial.PARITY_EVEN
         self.instrument.serial.stopbits = 1
-        self.instrument.serial.timeout  = 0.01   # seconds
+        self.instrument.serial.timeout  = 0.04   # seconds
 
     def optionalRead(self, request):
         answer = self.instrument._performCommand(3, request)
@@ -68,7 +74,7 @@ class Modbus:
         else:
             return answer
 
-    def registerRead(self, registeraddress):
+    def registerRead(self, registeraddress, signed = True):
         request = '\x00'
         request += chr(int(registeraddress))
         request += '\x00\x01'
@@ -81,6 +87,11 @@ class Modbus:
             data_num = int(ord(answer[0]))
             for i in range(data_num):
                 value = value + int(ord(answer[i+1])) * math.pow( 256, data_num - 1 - i)
+                # value = hex(value) & 0xffff
+
+            if signed == True:
+                value = twos_complement(hex(int(value)), 16)
+
             return value
 
     def registerWrite(self, registeraddress, value):

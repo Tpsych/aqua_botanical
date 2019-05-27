@@ -12,7 +12,8 @@ class SensorAssignment():
         self.water = water_id
 
 class ActuatorAssignment():
-    def __init__(self, pump_id, heater_id, feeding_motor_id, filtering_motor_id, filling_motor_id, magnetic_door_id):
+    def __init__(self, pump_id, heater_id, feeding_motor_id, filtering_motor_id, \
+            filling_motor_id, magnetic_door_id):
         self.pump = pump_id
         self.heater = heater_id
         self.feeding_motor = feeding_motor_id
@@ -34,7 +35,7 @@ class Monitor:
             return answer
 
     def readPH(self):
-        return self.modbus.registerRead(self.sensors_id.PH)
+        return self.modbus.registerRead(self.sensors_id.PH, signed = True)
 
     def readtemp(self):
         return self.modbus.registerRead(self.sensors_id.temp)
@@ -111,7 +112,8 @@ def operation():
     MAGNETIC_DOOR_ID = 12
 
     sensors_id = SensorAssignment(ORP_ID, PH_ID, TEMP_ID, OXYGEN_ID, SALT_ID, WATER_ID)
-    actuators_id = ActuatorAssignment(PUMP_ID, HEATER_ID, FEEDIND_MOTOR_ID, FILTERING_MOTOR_ID, FILLING_MOTOR_ID, MAGNETIC_DOOR_ID)
+    actuators_id = ActuatorAssignment(PUMP_ID, HEATER_ID, FEEDIND_MOTOR_ID,  \
+        FILTERING_MOTOR_ID, FILLING_MOTOR_ID, MAGNETIC_DOOR_ID)
     monitor1 = Monitor(PORT_NAME, BAUDRATE, BOX_ID, sensors_id, actuators_id)
 
     # # test{
@@ -129,7 +131,8 @@ def operation():
     # else:
     #     for type in board_type_list:
     #         print(type)
-    value = 1
+    
+    value = 0
     print("ORP:", monitor1.readORP())
     print("PH:", monitor1.readPH())
     print("temp:", monitor1.readtemp())
