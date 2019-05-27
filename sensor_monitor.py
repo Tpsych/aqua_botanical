@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 from modbus import *
+import math
 
 class SensorAssignment():
     def __init__(self, ORP_id, PH_id, temp_id, oxygen_id, salt_id, water_id):
@@ -26,7 +27,11 @@ class Monitor:
         self.actuators_id = actuators_id
 
     def readORP(self):
-        return self.modbus.registerRead(self.sensors_id.ORP)
+        answer = self.modbus.registerRead(self.sensors_id.ORP)
+        if answer == None:
+            return
+        else:
+            return answer
 
     def readPH(self):
         return self.modbus.registerRead(self.sensors_id.PH)
@@ -87,24 +92,26 @@ def operation():
 
     # # test{
     #
-    # monitor1.sensorOFF(9)
-    # testValue = 585
-    # monitor1.modbus.sensorOFF(9)
-    # testAnswer = monitor1.modbus.registerWrite(10, 369869868)
-    answer = monitor1.modbus.checkIOBoardType(0xE0)
-
+    answer = monitor1.modbus.sensorOFF(9)
     if answer == None:
-        print("No answer")
+        print("control fault")
     else:
-        for i in answer:
-            print(i)
+        print("control success")
 
-    # monitor1.readORP()
-    # monitor1.readPH()
-    # monitor1.readtemp()
-    # monitor1.readOxygen()
-    # monitor1.readSalt()
-    # monitor1.readWater()
+    # board_type_list = monitor1.modbus.checkIOBoardType(0xE0)
+    #
+    # if board_type_list == None:
+    #     print("No answer")
+    # else:
+    #     for type in board_type_list:
+    #         print(type)
+
+    print("ORP:", monitor1.readORP())
+    # print("PH:", monitor1.readPH())
+    # print("temp:", monitor1.readtemp())
+    # print("Oxygen:", monitor1.readOxygen())
+    # print("Salt:", monitor1.readSalt())
+    # print("Water:", monitor1.readWater())
     # monitor1.writePump(value)
     # monitor1.writeHeater(value)
     # monitor1.writeFeedingMotor(value)
