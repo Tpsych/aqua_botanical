@@ -14,7 +14,7 @@ class Modbus:
         self.instrument.serial.bytesize = 8
         self.instrument.serial.parity   = serial.PARITY_EVEN
         self.instrument.serial.stopbits = 1
-        self.instrument.serial.timeout  = 0.05   # seconds
+        self.instrument.serial.timeout  = 0.01   # seconds
 
     def optionalRead(self, request):
         answer = self.instrument._performCommand(3, request)

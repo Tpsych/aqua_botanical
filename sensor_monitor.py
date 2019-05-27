@@ -49,22 +49,46 @@ class Monitor:
         return self.modbus.registerRead(self.sensors_id.water)
 
     def writePump(self, value):
-        return self.modbus.registerWrite(self.actuators_id.pump, value)
+        if value == 0 or value == 1:
+            return self.modbus.registerWrite(self.actuators_id.pump, value)
+        else:
+            print("Pump control parameter fault")
+            return
 
     def writeHeater(self, value):
-        return self.modbus.registerWrite(self.actuators_id.heater, value)
+        if value == 0 or value == 1:
+            return self.modbus.registerWrite(self.actuators_id.heater, value)
+        else:
+            print("Heater control parameter fault")
+            return
 
     def writeFeedingMotor(self, value):
-        return self.modbus.registerWrite(self.actuators_id.feeding_motor, value)
+        if value == 0 or value == 1:
+            return self.modbus.registerWrite(self.actuators_id.feeding_motor, value)
+        else:
+            print("FeedingMotor control parameter fault")
+            return
 
     def writeFilteringMotor(self, value):
-        return self.modbus.registerWrite(self.actuators_id.filtering_motor, value)
+        if value == 0 or value == 1:
+            return self.modbus.registerWrite(self.actuators_id.filtering_motor, value)
+        else:
+            print("FilteringMotor control parameter fault")
+            return
 
     def writeFillingMotor(self, value):
-        return self.modbus.registerWrite(self.actuators_id.filling_motor, value)
+        if value == 0 or value == 1:
+            return self.modbus.registerWrite(self.actuators_id.filling_motor, value)
+        else:
+            print("FillingMotor control parameter fault")
+            return
 
     def writeMagneticDoor(self, value):
-        return self.modbus.registerWrite(self.actuators_id.magnetic_door, value)
+        if value == 0 or value == 1:
+            return self.modbus.registerWrite(self.actuators_id.magnetic_door, value)
+        else:
+            print("MagneticDoor control parameter fault")
+            return
 
 def operation():
     # communication setting
@@ -105,19 +129,19 @@ def operation():
     # else:
     #     for type in board_type_list:
     #         print(type)
-
+    value = 1
     print("ORP:", monitor1.readORP())
-    # print("PH:", monitor1.readPH())
-    # print("temp:", monitor1.readtemp())
-    # print("Oxygen:", monitor1.readOxygen())
-    # print("Salt:", monitor1.readSalt())
-    # print("Water:", monitor1.readWater())
-    # monitor1.writePump(value)
-    # monitor1.writeHeater(value)
-    # monitor1.writeFeedingMotor(value)
-    # monitor1.writeFilteringMotor(value)
-    # monitor1.writeFillingMotor(value)
-    # monitor1.writeMagneticDoor(value)
+    print("PH:", monitor1.readPH())
+    print("temp:", monitor1.readtemp())
+    print("Oxygen:", monitor1.readOxygen())
+    print("Salt:", monitor1.readSalt())
+    print("Water:", monitor1.readWater())
+    monitor1.writePump(value)
+    monitor1.writeHeater(value)
+    monitor1.writeFeedingMotor(value)
+    monitor1.writeFilteringMotor(value)
+    monitor1.writeFillingMotor(value)
+    monitor1.writeMagneticDoor(value)
     #
     # # }test
 
