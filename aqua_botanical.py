@@ -4,6 +4,29 @@
 from sensor_monitor import *
 import time
 
+#Sensor Info
+PORT_NAME = '/dev/tty.usbserial-DN03VH4V'
+BAUDRATE = 9600
+BOX_ID = 99
+ORP_ID = 1
+PH_ID = 2
+TEMP_ID = 3
+OXYGEN_ID = 4
+SALT_ID = 5
+WATER_ID = 6
+PUMP_ID = 7
+HEATER_ID = 8
+FEEDIND_MOTOR_ID = 9
+FILTERING_MOTOR_ID = 10
+FILLING_MOTOR_ID = 11
+MAGNETIC_DOOR_ID = 12
+
+#Global sensor objects
+gSensorsId = SensorAssignment(ORP_ID, PH_ID, TEMP_ID, OXYGEN_ID, SALT_ID, WATER_ID)
+gActuatorsId = ActuatorAssignment(PUMP_ID, HEATER_ID, FEEDIND_MOTOR_ID, \
+FILTERING_MOTOR_ID, FILLING_MOTOR_ID, MAGNETIC_DOOR_ID)
+gMonitor = Monitor(PORT_NAME, BAUDRATE, BOX_ID, gSensorsId, gActuatorsId)
+
 #Constants
 HIGH_ORP_THRESHOLD = 250 #mv
 LOW_ORP_THRESHOLD = 200 #mv
@@ -53,14 +76,16 @@ def warningForLowSalt():
 
 def orpPerception():
     print("ORP perception, the orp value now is:")
-    print(gORP)
+    print(monitor1.readORP())
+    gORP = monitor1.readORP()
     # Get sensor value here
     if gORP < LOW_ORP_THRESHOLD:
         gAbnormalState['abnormalORP'] = True
 
 def phPerception():
     print("PH perception, the ph value now is:")
-    print(gPH)
+    print(monitor1.readPH())
+    gPH = monitor1.readPH()
     # Get sensor value here
     if gPH > HIGH_PH_THRESHOLD_1 or \
     gPH < LOW_PH_THRESHOLD_1:
@@ -68,7 +93,8 @@ def phPerception():
 
 def temperaturePerception():
     print("Temperature perception, the temperature value now is:")
-    print(gTemperature)
+    print(monitor1.readtemp())
+    gTemperature = monitor1.readtemp()
     # Get sensor value here
     if gTemperature > HIGH_TEMPERATURE_THRESHOLD or \
     gTemperature < LOW_TEMPERATURE_THRESHOLD:
@@ -76,14 +102,16 @@ def temperaturePerception():
 
 def oxygenPerception():
     print("Oxygen perception, the oxygen value now is:")
-    print(gOxygen)
+    print(monitor1.readOxygen())
+    gOxygen = monitor1.readOxygen()
     # Get sensor value here
     if gOxygen < LOW_OXYGEN_THRESHOLD:
         gAbnormalState['abnormalOxygen'] = True
 
 def saltPerception():
     print("Salt perception, the salt value now is:")
-    print(gSalt)
+    print(monitor1.readSalt())
+    gSalt = monitor1.readSalt()
     # Get sensor value here
     if gSalt > HIGH_SALT_THRESHOLD or \
     gSalt < LOW_SALT_THRESHOLD:
