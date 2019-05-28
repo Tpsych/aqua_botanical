@@ -1,6 +1,7 @@
 #Aqua Botanical System
 #Author: Barry Hao, Tony Tsai
 
+from sensor_monitor import *
 import time
 
 #Constants
