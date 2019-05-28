@@ -122,10 +122,12 @@ def plantLightControl():
 
 def pumpOxygen(command):
     print("Pump Oxygen")
+    monitor1.writePump(command)
 
 #Turn on/off heater
 def heaterControl(command):
     print("Heater control")
+    monitor1.writeHeater(command)
 
 #Get gFeedingTankWaterLevel and gFilteringTankWaterLevel
 def waterLevelDetection():
@@ -134,15 +136,18 @@ def waterLevelDetection():
 #Turn on/off motors in feeding/filtering tank
 def motorControl(feedingMotorCommand, filteringMotorCommand):
     print("Motor control")
+    monitor1.writeFeedingMotor(feedingMotorCommand)
+    monitor1.writeFilteringMotor(filteringMotorCommand)
 
 #Turn/off filling motor
 def fillingMotorControl(command):
     print("Filling Motor Control")
-    waterLevelDetection()
+    monitor1.writeFillingMotor(command)
 
 #Turn on/off electrical Door
 def electricalMagneticDoor(command):
     print("Electrical magnetic door")
+    monitor1.writeMagneticDoor(command)
 
 def checkFeedingTankWaterLevel(expectedLevel):
     while gFeedingTankWaterLevel != expectedLevel:
