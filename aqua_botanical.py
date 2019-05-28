@@ -76,16 +76,16 @@ def warningForLowSalt():
 
 def orpPerception():
     print("ORP perception, the orp value now is:")
-    print(monitor1.readORP())
-    gORP = monitor1.readORP()
+    print(gMonitor.readORP())
+    gORP = gMonitor.readORP()
     # Get sensor value here
     if gORP < LOW_ORP_THRESHOLD:
         gAbnormalState['abnormalORP'] = True
 
 def phPerception():
     print("PH perception, the ph value now is:")
-    print(monitor1.readPH())
-    gPH = monitor1.readPH()
+    print(gMonitor.readPH())
+    gPH = gMonitor.readPH()
     # Get sensor value here
     if gPH > HIGH_PH_THRESHOLD_1 or \
     gPH < LOW_PH_THRESHOLD_1:
@@ -93,8 +93,8 @@ def phPerception():
 
 def temperaturePerception():
     print("Temperature perception, the temperature value now is:")
-    print(monitor1.readtemp())
-    gTemperature = monitor1.readtemp()
+    print(gMonitor.readtemp())
+    gTemperature = gMonitor.readtemp()
     # Get sensor value here
     if gTemperature > HIGH_TEMPERATURE_THRESHOLD or \
     gTemperature < LOW_TEMPERATURE_THRESHOLD:
@@ -102,16 +102,16 @@ def temperaturePerception():
 
 def oxygenPerception():
     print("Oxygen perception, the oxygen value now is:")
-    print(monitor1.readOxygen())
-    gOxygen = monitor1.readOxygen()
+    print(gMonitor.readOxygen())
+    gOxygen = gMonitor.readOxygen()
     # Get sensor value here
     if gOxygen < LOW_OXYGEN_THRESHOLD:
         gAbnormalState['abnormalOxygen'] = True
 
 def saltPerception():
     print("Salt perception, the salt value now is:")
-    print(monitor1.readSalt())
-    gSalt = monitor1.readSalt()
+    print(gMonitor.readSalt())
+    gSalt = gMonitor.readSalt()
     # Get sensor value here
     if gSalt > HIGH_SALT_THRESHOLD or \
     gSalt < LOW_SALT_THRESHOLD:
@@ -122,12 +122,12 @@ def plantLightControl():
 
 def pumpOxygen(command):
     print("Pump Oxygen")
-    monitor1.writePump(command)
+    gMonitor.writePump(command)
 
 #Turn on/off heater
 def heaterControl(command):
     print("Heater control")
-    monitor1.writeHeater(command)
+    gMonitor.writeHeater(command)
 
 #Get gFeedingTankWaterLevel and gFilteringTankWaterLevel
 def waterLevelDetection():
@@ -136,18 +136,18 @@ def waterLevelDetection():
 #Turn on/off motors in feeding/filtering tank
 def motorControl(feedingMotorCommand, filteringMotorCommand):
     print("Motor control")
-    monitor1.writeFeedingMotor(feedingMotorCommand)
-    monitor1.writeFilteringMotor(filteringMotorCommand)
+    gMonitor.writeFeedingMotor(feedingMotorCommand)
+    gMonitor.writeFilteringMotor(filteringMotorCommand)
 
 #Turn/off filling motor
 def fillingMotorControl(command):
     print("Filling Motor Control")
-    monitor1.writeFillingMotor(command)
+    gMonitor.writeFillingMotor(command)
 
 #Turn on/off electrical Door
 def electricalMagneticDoor(command):
     print("Electrical magnetic door")
-    monitor1.writeMagneticDoor(command)
+    gMonitor.writeMagneticDoor(command)
 
 def checkFeedingTankWaterLevel(expectedLevel):
     while gFeedingTankWaterLevel != expectedLevel:
