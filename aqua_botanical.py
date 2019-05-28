@@ -316,7 +316,6 @@ def sensorOperation():
 def main():
     while True:
         print("Aqua Botanical System!")
-        restartAfterSensorOperation = False
         timeout = time.time() + 1800 # 30 minutes
         while time.time() < timeout:
             # Should create a queue for all abnormal state
@@ -329,10 +328,7 @@ def main():
                 sensorPerception()
             else:
                 sensorOperation()
-                restartAfterSensorOperation = True
-                break
-        if restartAfterSensorOperation:
-            break
+                main()
         timeout = time.time() + 300 # 5 minutes
         while time.time() < timeout:
             time.sleep(10)
