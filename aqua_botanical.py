@@ -339,6 +339,7 @@ def main():
             time.sleep(10)
             waterLevelDetection()
         motorControl(0, 0)
+        print("Restart circulation")
 
 if __name__ == "__main__":
     main()
