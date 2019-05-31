@@ -4,14 +4,17 @@ from modbus import *
 import math
 
 class SensorAssignment():
-    def __init__(self, ORP_id, PH_id, temp_id, oxygen_id, salt_id, water_high_id, water_low_id):
+    def __init__(self, ORP_id, PH_id, temp_id, oxygen_id, salt_id,\
+        water1_high_id, water1_low_id, water2_high_id, water2_low_id):
         self.ORP = ORP_id
         self.PH = PH_id
         self.temp = temp_id
         self.oxygen = oxygen_id
         self.salt = salt_id
-        self.water_high = water_high_id
-        self.water_low = water_low_id
+        self.water1_high = water1_high_id
+        self.water1_low = water1_low_id
+        self.water2_high = water2_high_id
+        self.water2_low = water2_low_id
 
 class ActuatorAssignment():
     def __init__(self, pump_id, heater_id, feeding_motor_id, filtering_motor_id, \
@@ -69,11 +72,17 @@ class Monitor:
             answer = (answer - 4.0) * 600.0 / 16.0
             return answer
 
-    def readWaterHigh(self):
-        return self.modbus.registerRead(self.sensors_id.water_high)
+    def readWater1High(self):
+        return self.modbus.registerRead(self.sensors_id.water1_high)
 
-    def readWaterLow(self):
-        return self.modbus.registerRead(self.sensors_id.water_low)
+    def readWater1Low(self):
+        return self.modbus.registerRead(self.sensors_id.water1_low)
+
+    def readWater2High(self):
+        return self.modbus.registerRead(self.sensors_id.water2_high)
+
+    def readWater2Low(self):
+        return self.modbus.registerRead(self.sensors_id.water2_low)
 
     def writePump(self, value):
         if value == 0 or value == 1:
