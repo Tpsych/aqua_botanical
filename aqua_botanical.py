@@ -13,18 +13,25 @@ PH_ID = 2
 TEMP_ID = 3
 OXYGEN_ID = 4
 SALT_ID = 5
-WATER_ID = 6
-PUMP_ID = 7
-HEATER_ID = 8
-FEEDIND_MOTOR_ID = 9
-FILTERING_MOTOR_ID = 10
-FILLING_MOTOR_ID = 11
-MAGNETIC_DOOR_ID = 12
+WATER1_HIGH_ID = 6
+WATER1_LOW_ID = 7
+WATER2_HIGH_ID = 8
+WATER2_LOW_ID = 9
+PUMP_ID = 10
+HEATER_ID = 11
+FEEDIND_MOTOR_ID = 12
+FILTERING_MOTOR_ID = 13
+FILLING_MOTOR_ID = 14
+MAGNETIC_DOOR_ID = 15
+BUZZER_ID = 16
 
 #Global sensor objects
-gSensorsId = SensorAssignment(ORP_ID, PH_ID, TEMP_ID, OXYGEN_ID, SALT_ID, WATER_ID)
+gSensorsId = SensorAssignment(ORP_ID, PH_ID, TEMP_ID, OXYGEN_ID, SALT_ID, \
+WATER1_HIGH_ID, WATER1_LOW_ID, WATER2_HIGH_ID, WATER2_LOW_ID)
+
 gActuatorsId = ActuatorAssignment(PUMP_ID, HEATER_ID, FEEDIND_MOTOR_ID, \
-FILTERING_MOTOR_ID, FILLING_MOTOR_ID, MAGNETIC_DOOR_ID)
+FILTERING_MOTOR_ID, FILLING_MOTOR_ID, MAGNETIC_DOOR_ID, BUZZER_ID)
+
 gMonitor = Monitor(PORT_NAME, BAUDRATE, BOX_ID, gSensorsId, gActuatorsId)
 
 #Constants
@@ -67,6 +74,7 @@ gAbnormalState = dict(
 
 def warningBuzzer(command):
     print("Warning buzzer")
+    gMonitor.writeBuzzer(command)
 
 def warningForLowSalt():
     print("Warning for low salt")
