@@ -117,9 +117,6 @@ def saltPerception():
     gSalt < LOW_SALT_THRESHOLD:
         gAbnormalState['abnormalSalt'] = True
 
-def plantLightControl():
-    print("Light control for the plant")
-
 def pumpOxygen(command):
     print("Pump Oxygen")
     gMonitor.writePump(command)
