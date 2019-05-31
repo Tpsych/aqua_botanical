@@ -86,7 +86,7 @@ def orpPerception():
     print("ORP perception, the orp value now is:")
     print(gMonitor.readORP())
     gORP = gMonitor.readORP()
-    # Get sensor value here
+
     if gORP < LOW_ORP_THRESHOLD:
         gAbnormalState['abnormalORP'] = True
 
@@ -94,7 +94,7 @@ def phPerception():
     print("PH perception, the ph value now is:")
     print(gMonitor.readPH())
     gPH = gMonitor.readPH()
-    # Get sensor value here
+
     if gPH > HIGH_PH_THRESHOLD_1 or \
     gPH < LOW_PH_THRESHOLD_1:
         gAbnormalState['abnormalPH'] = True
@@ -103,7 +103,7 @@ def temperaturePerception():
     print("Temperature perception, the temperature value now is:")
     print(gMonitor.readtemp())
     gTemperature = gMonitor.readtemp()
-    # Get sensor value here
+
     if gTemperature > HIGH_TEMPERATURE_THRESHOLD or \
     gTemperature < LOW_TEMPERATURE_THRESHOLD:
         gAbnormalState['abnormalTemperature'] = True
@@ -112,7 +112,7 @@ def oxygenPerception():
     print("Oxygen perception, the oxygen value now is:")
     print(gMonitor.readOxygen())
     gOxygen = gMonitor.readOxygen()
-    # Get sensor value here
+
     if gOxygen < LOW_OXYGEN_THRESHOLD:
         gAbnormalState['abnormalOxygen'] = True
 
@@ -120,7 +120,7 @@ def saltPerception():
     print("Salt perception, the salt value now is:")
     print(gMonitor.readSalt())
     gSalt = gMonitor.readSalt()
-    # Get sensor value here
+
     if gSalt > HIGH_SALT_THRESHOLD or \
     gSalt < LOW_SALT_THRESHOLD:
         gAbnormalState['abnormalSalt'] = True
@@ -137,6 +137,18 @@ def heaterControl(command):
 #Get gFeedingTankWaterLevel and gFilteringTankWaterLevel
 def waterLevelDetection():
     print("Water level detection")
+    if readWater1High() == True and readWater1Low() == True:
+        gFeedingTankWaterLevel = 2
+    elif readWater1High() == False and readWater1Low() == True:
+        gFeedingTankWaterLevel = 1
+    else:
+        gFeedingTankWaterLevel =0
+    if readWater2High() == True and readWater2Low() == True:
+        gFilteringTankWaterLevel = 2
+    elif readWater2High() == False and readWater2Low() == True:
+        gFilteringTankWaterLevel = 1
+    else:
+        gFilteringTankWaterLevel =0
 
 #Turn on/off motors in feeding/filtering tank
 def motorControl(feedingMotorCommand, filteringMotorCommand):
