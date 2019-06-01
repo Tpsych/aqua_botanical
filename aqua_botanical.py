@@ -276,7 +276,7 @@ def temperatureOperation():
     global gTemperature
     if gTemperature > HIGH_TEMPERATURE_THRESHOLD:
         timeout = time.time() + 300
-        while:
+        while True:
             if time.time() < timeout:
                 circulation()
                 time.sleep(10)
@@ -291,7 +291,7 @@ def temperatureOperation():
     if gTemperature < LOW_TEMPERATURE_THRESHOLD:
         timeout = time.time() + 300
         heaterControl(1)
-        while:
+        while True:
             if time.time() < timeout:
                 circulation()
                 time.sleep(10)
@@ -320,7 +320,7 @@ def saltOperation():
     global gSalt
     if gSalt > HIGH_SALT_THRESHOLD:
         timeout = time.time() + 300
-        while:
+        while True:
             if time.time() < timeout:
                     circulation()
                     time.sleep(5)
@@ -346,7 +346,7 @@ def phOperation():
     if gPH > HIGH_PH_THRESHOLD_1 or \
     gPH < LOW_PH_THRESHOLD_1:
         timeout = time.time() + 300
-        while:
+        while True:
             if time.time() < timeout:
                 circulation()
                 time.sleep(10)
@@ -364,7 +364,7 @@ def orpOperation():
     global gORP
     if gORP < LOW_ORP_THRESHOLD:
         timeout = time.time() + 300
-        while:
+        while True:
             if time.time() < timeout:
                     circulation()
                     time.sleep(5)
