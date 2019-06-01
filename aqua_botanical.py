@@ -89,7 +89,7 @@ def orpPerception():
     print(gMonitor.readORP())
     gORP = gMonitor.readORP()
     fileDate = strftime("%m_%d_%Y")
-    fileExist = os.path.isfile("/path_in_raspberry_pi")
+    fileExist = os.path.isfile("/home/pi/Desktop/sensor_data/" + fileDate + "/orp")
     if fileExist:
         f = open("/home/pi/Desktop/sensor_data/" + fileDate + "/orp", "a")
         f.write(strftime("%H:%M:%S")+ ' ' + gORP)
@@ -105,7 +105,7 @@ def phPerception():
     print(gMonitor.readPH())
     gPH = gMonitor.readPH()
     fileDate = strftime("%m_%d_%Y")
-    fileExist = os.path.isfile("/path_in_raspberry_pi")
+    fileExist = os.path.isfile("/home/pi/Desktop/sensor_data/" + fileDate + "/ph")
     if fileExist:
         f = open("/home/pi/Desktop/sensor_data/" + fileDate + "/ph", "a")
         f.write(strftime("%H:%M:%S")+ ' ' + gPH)
@@ -121,7 +121,7 @@ def temperaturePerception():
     print(gMonitor.readtemp())
     gTemperature = gMonitor.readtemp()
     fileDate = strftime("%m_%d_%Y")
-    fileExist = os.path.isfile("/path_in_raspberry_pi")
+    fileExist = os.path.isfile("/home/pi/Desktop/sensor_data/" + fileDate + "/temperature")
     if fileExist:
         f = open("/home/pi/Desktop/sensor_data/" + fileDate + "/temperature", "a")
         f.write(strftime("%H:%M:%S")+ ' ' + gTemperature)
@@ -138,7 +138,7 @@ def oxygenPerception():
     print(gMonitor.readOxygen())
     gOxygen = gMonitor.readOxygen()
     fileDate = strftime("%m_%d_%Y")
-    fileExist = os.path.isfile("/path_in_raspberry_pi")
+    fileExist = os.path.isfile("/home/pi/Desktop/sensor_data/" + fileDate + "/oxygen")
     if fileExist:
         f = open("/home/pi/Desktop/sensor_data/" + fileDate + "/oxygen", "a")
         f.write(strftime("%H:%M:%S")+ ' ' + gOxygen)
@@ -154,7 +154,7 @@ def saltPerception():
     print(gMonitor.readSalt())
     gSalt = gMonitor.readSalt()
     fileDate = strftime("%m_%d_%Y")
-    fileExist = os.path.isfile("/path_in_raspberry_pi")
+    fileExist = os.path.isfile("/home/pi/Desktop/sensor_data/" + fileDate + "/salt")
     if fileExist:
         f = open("/home/pi/Desktop/sensor_data/" + fileDate + "/salt", "a")
         f.write(strftime("%H:%M:%S")+ ' ' + gSalt)
