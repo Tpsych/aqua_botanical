@@ -284,7 +284,7 @@ def temperatureOperation():
         while gTemperature > MID_TEMPERATURE_THRESHOLD and \
         time.time() < timeout:
             circulation()
-            time.sleep(5) # Circulate every 5 seconds
+            time.sleep(5)
             temperaturePerception()
         gAbnormalState['abnormalTemperature'] = False
 
@@ -293,7 +293,7 @@ def temperatureOperation():
         heaterControl(1)
         while gTemperature < MID_TEMPERATURE_THRESHOLD and \
         time.time() < timeout:
-            time.sleep(10) # Check every 10 seconds
+            time.sleep(10)
             temperaturePerception()
         heaterControl(0)
         gAbnormalState['abnormalTemperature'] = False
@@ -304,7 +304,7 @@ def oxygenOperation():
     if gOxygen < LOW_OXYGEN_THRESHOLD:
         pumpOxygen(1)
         while gOxygen < HIGH_OXYGEN_THRESHOLD:
-            time.sleep(10) # Pump oxygen for 10 seconds
+            time.sleep(10)
             oxygenPerception()
         pumpOxygen(0)
         gAbnormalState['abnormalOxygen'] = False
@@ -317,7 +317,7 @@ def saltOperation():
         while gSalt > MID_SALT_THRESHOLD and \
         time.time() < timeout:
             circulation()
-            time.sleep(5) # Circulate every 5 seconds
+            time.sleep(5)
             saltPerception()
         gAbnormalState['abnormalSalt'] = False
 
@@ -325,7 +325,7 @@ def saltOperation():
         warningForLowSalt()
         while gSalt < MID_SALT_THRESHOLD:
             warningForLowSalt()
-            time.sleep(10) # Check every 10 seconds
+            time.sleep(10)
             saltPerception()
         gAbnormalState['abnormalSalt'] = False
 
@@ -350,7 +350,7 @@ def orpOperation():
         timeout = time.time() + 300
         while gORP < HIGH_ORP_THRESHOLD and \
         time.time() < timeout:
-            time.sleep(10) # Check every 10 seconds
+            time.sleep(10)
             orpPerception()
         gAbnormalState['abnormalORP'] = False
 
@@ -382,7 +382,7 @@ def main():
             gAbnormalState['abnormalTemperature'] == False and \
             gAbnormalState['abnormalOxygen'] == False and \
             gAbnormalState['abnormalSalt'] == False:
-                time.sleep(10) # delay for 5 seconds
+                time.sleep(10)
                 sensorPerception()
             else:
                 sensorOperation()
