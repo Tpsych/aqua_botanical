@@ -1,3 +1,4 @@
 0 8 * * * /bin/sh folder_creator.sh
+0 8 * * * /bin/sh remove_files.sh
 @reboot python /path/to/aqua_botanical/program
 @reboot bash /path/to/folder_creator/script
