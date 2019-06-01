@@ -350,7 +350,8 @@ def orpOperation():
         timeout = time.time() + 300
         while gORP < HIGH_ORP_THRESHOLD and \
         time.time() < timeout:
-            time.sleep(10)
+            circulation()
+            time.sleep(5)
             orpPerception()
         gAbnormalState['abnormalORP'] = False
 
