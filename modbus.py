@@ -20,7 +20,7 @@ class Modbus:
         self.instrument.serial.bytesize = 8
         self.instrument.serial.parity   = serial.PARITY_EVEN
         self.instrument.serial.stopbits = 1
-        self.instrument.serial.timeout  = 0.04   # seconds
+        self.instrument.serial.timeout  = 0.05   # seconds
 
     def optionalRead(self, request):
         answer = self.instrument._performCommand(3, request)
@@ -104,9 +104,10 @@ class Modbus:
             request += chr(int(value/256))
             request += chr(int(value%256))
 
-            print("output value:",value)
-            print("(hex)dataH:",hex(int(value/256)))
-            print("(hex)dataL:",hex(int(value%256)))
+            if self.instrument.debug:
+                print("output value:",value)
+                print("(hex)dataH:",hex(int(value/256)))
+                print("(hex)dataL:",hex(int(value%256)))
             answer = self.instrument._performCommand(6, request)
 
             if answer == None:

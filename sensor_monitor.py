@@ -3,7 +3,7 @@
 from modbus import *
 import math
 
-class SensorAssignment():
+class Box1SensorAssignment():
     def __init__(self, ORP_id, PH_id, temp_id, oxygen_id, salt_id,\
         water1_high_id, water1_low_id, water2_high_id, water2_low_id):
         self.ORP = ORP_id
@@ -16,18 +16,21 @@ class SensorAssignment():
         self.water2_high = water2_high_id
         self.water2_low = water2_low_id
 
-class ActuatorAssignment():
-    def __init__(self, pump_id, heater_id, feeding_motor_id, filtering_motor_id, \
-            filling_motor_id, magnetic_door_id, buzzer_id):
+class Box1ActuatorAssignment():
+    def __init__(self, pump_id, feeding_motor_id, filtering_motor_id):
         self.pump = pump_id
-        self.heater = heater_id
         self.feeding_motor = feeding_motor_id
         self.filtering_motor = filtering_motor_id
+
+class Box2ActuatorAssignment():
+    def __init__(self, heater_id, filling_motor_id, led_id, magnetic_door_id, buzzer_id):
+        self.heater = heater_id
+        self.led = led_id
         self.filling_motor = filling_motor_id
         self.magnetic_door = magnetic_door_id
         self.buzzer = buzzer_id
 
-class Monitor:
+class Monitor1:
     def __init__(self, port_name, baudrate, box_id, sensors_id, actuators_id):
         self.modbus = Modbus(port_name, baudrate, box_id)
         self.sensors_id = sensors_id
@@ -38,8 +41,7 @@ class Monitor:
         if answer == None:
             return
         else:
-            answer = answer * 20.0 /4000.0
-            answer = (answer - 4.0) * 14.0 / 16.0
+            answer = ((answer - 800.0) / 3200.0 * 200.0)
             return answer
 
     def readPH(self):
@@ -47,20 +49,23 @@ class Monitor:
         if answer == None:
             return
         else:
-            answer = answer * 20.0 /4000.0
-            answer = (answer - 4.0) * 14.0 / 16.0
+            answer = ((answer - 800.0) / 3200.0 * 14.0)
             return answer
 
     def readtemp(self):
-        return self.modbus.registerRead(self.sensors_id.temp)
+        answer = self.modbus.registerRead(self.sensors_id.temp)
+        if answer == None:
+            return
+        else:
+            return answer / 10.0
 
     def readOxygen(self):
         answer = self.modbus.registerRead(self.sensors_id.oxygen, signed = False)
         if answer == None:
             return
         else:
-            answer = answer * 20.0 /4000.0
-            answer = (answer - 4.0) * 20.0 / 16.0
+            # answer = ((answer/200.0 - 4.0) * 20.0 / 16.0)
+            answer = ((answer - 800.0) / 3200.0 * 20.0)
             return answer
 
     def readSalt(self):
@@ -68,9 +73,13 @@ class Monitor:
         if answer == None:
             return
         else:
-            answer =  answer * 20.0 /4000.0
-            answer = (answer - 4.0) * 600.0 / 16.0
-            return answer
+            # answer = ((answer/200.0 - 4.0) * (66.7-1.32) / 16.0 + 1.32) * 10.0
+            if answer < 800:
+                print("Salt sensor disconnect")
+                return
+            else:
+                answer = ((answer - 800.0) / 3200.0 * 600.0)
+                return answer
 
     def readWater1High(self):
         return self.modbus.registerRead(self.sensors_id.water1_high)
@@ -91,13 +100,6 @@ class Monitor:
             print("Pump control parameter fault")
             return
 
-    def writeHeater(self, value):
-        if value == 0 or value == 1:
-            return self.modbus.registerWrite(self.actuators_id.heater, value)
-        else:
-            print("Heater control parameter fault")
-            return
-
     def writeFeedingMotor(self, value):
         if value == 0 or value == 1:
             return self.modbus.registerWrite(self.actuators_id.feeding_motor, value)
@@ -112,6 +114,18 @@ class Monitor:
             print("FilteringMotor control parameter fault")
             return
 
+class Monitor2:
+    def __init__(self, port_name, baudrate, box_id, actuators_id):
+        self.modbus = Modbus(port_name, baudrate, box_id)
+        self.actuators_id = actuators_id
+
+    def writeHeater(self, value):
+        if value == 0 or value == 1:
+            return self.modbus.registerWrite(self.actuators_id.heater, value)
+        else:
+            print("Heater control parameter fault")
+            return
+
     def writeFillingMotor(self, value):
         if value == 0 or value == 1:
             return self.modbus.registerWrite(self.actuators_id.filling_motor, value)
@@ -124,6 +138,13 @@ class Monitor:
             return self.modbus.registerWrite(self.actuators_id.magnetic_door, value)
         else:
             print("MagneticDoor control parameter fault")
+            return
+
+    def writeLED(self, value):
+        if value == 0 or value == 1:
+            return self.modbus.registerWrite(self.actuators_id.led, value)
+        else:
+            print("Buzzer control parameter fault")
             return
 
     def writeBuzzer(self, value):
