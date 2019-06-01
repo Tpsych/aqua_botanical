@@ -314,11 +314,16 @@ def saltOperation():
     global gSalt
     if gSalt > HIGH_SALT_THRESHOLD:
         timeout = time.time() + 300
-        while gSalt > MID_SALT_THRESHOLD and \
-        time.time() < timeout:
-            circulation()
-            time.sleep(5)
-            saltPerception()
+        while:
+            if time.time() < timeout:
+                    circulation()
+                    time.sleep(5)
+            else:
+                saltPerception()
+                if gSalt < MID_SALT_THRESHOLD:
+                    break
+                else:
+                    timeout = time.time() + 300
         gAbnormalState['abnormalSalt'] = False
 
     if gSalt < LOW_SALT_THRESHOLD:
