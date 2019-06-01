@@ -51,7 +51,6 @@ HIGH_OXYGEN_THRESHOLD = 6.5 #ppm
 LOW_SALT_THRESHOLD = 20
 MID_SALT_THRESHOLD = 25
 HIGH_SALT_THRESHOLD = 30
-ABNORMAL_TIME_LIMIT = 5 #minute
 
 #Read from perception sensors
 gFeedingTankWaterLevel = None # 0 for low, 1 for mid, 2 for high
@@ -61,9 +60,6 @@ gPH = None
 gTemperature = None
 gOxygen = None
 gSalt = None
-
-#Electrical Magnetic Door
-gElectricalMagneticDoorState = False
 
 #Global table for storing abnormal sensor
 gAbnormalState = dict(
