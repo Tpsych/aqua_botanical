@@ -91,7 +91,7 @@ def orpPerception():
     fileDate = strftime("%m_%d_%Y")
     fileExist = os.path.isfile("/path_in_raspberry_pi")
     if fileExist:
-        f = open("/path_in_raspberry_pi", "a")
+        f = open("/home/pi/Desktop/sensor_data/" + fileDate + "/orp", "a")
         f.write(strftime("%H:%M:%S")+ ' ' + gORP)
         f.close()
     else:
@@ -107,7 +107,7 @@ def phPerception():
     fileDate = strftime("%m_%d_%Y")
     fileExist = os.path.isfile("/path_in_raspberry_pi")
     if fileExist:
-        f = open("/path_in_raspberry_pi", "a")
+        f = open("/home/pi/Desktop/sensor_data/" + fileDate + "/ph", "a")
         f.write(strftime("%H:%M:%S")+ ' ' + gPH)
         f.close()
     else:
@@ -123,7 +123,7 @@ def temperaturePerception():
     fileDate = strftime("%m_%d_%Y")
     fileExist = os.path.isfile("/path_in_raspberry_pi")
     if fileExist:
-        f = open("/path_in_raspberry_pi", "a")
+        f = open("/home/pi/Desktop/sensor_data/" + fileDate + "/temperature", "a")
         f.write(strftime("%H:%M:%S")+ ' ' + gTemperature)
         f.close()
     else:
@@ -140,7 +140,7 @@ def oxygenPerception():
     fileDate = strftime("%m_%d_%Y")
     fileExist = os.path.isfile("/path_in_raspberry_pi")
     if fileExist:
-        f = open("/path_in_raspberry_pi", "a")
+        f = open("/home/pi/Desktop/sensor_data/" + fileDate + "/oxygen", "a")
         f.write(strftime("%H:%M:%S")+ ' ' + gOxygen)
         f.close()
     else:
@@ -156,7 +156,7 @@ def saltPerception():
     fileDate = strftime("%m_%d_%Y")
     fileExist = os.path.isfile("/path_in_raspberry_pi")
     if fileExist:
-        f = open("/path_in_raspberry_pi", "a")
+        f = open("/home/pi/Desktop/sensor_data/" + fileDate + "/salt", "a")
         f.write(strftime("%H:%M:%S")+ ' ' + gSalt)
         f.close()
     else:
