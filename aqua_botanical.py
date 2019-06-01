@@ -368,11 +368,16 @@ def orpOperation():
     global gORP
     if gORP < LOW_ORP_THRESHOLD:
         timeout = time.time() + 300
-        while gORP < HIGH_ORP_THRESHOLD and \
-        time.time() < timeout:
-            circulation()
-            time.sleep(5)
-            orpPerception()
+        while:
+            if time.time() < timeout:
+                    circulation()
+                    time.sleep(5)
+            else:
+                orpPerception()
+                if gORP > MID_SALT_THRESHOLD:
+                    break
+                else:
+                    timeout = time.time() + 300
         gAbnormalState['abnormalORP'] = False
 
 def sensorOperation():
