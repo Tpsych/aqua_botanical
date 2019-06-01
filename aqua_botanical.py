@@ -375,6 +375,7 @@ def sensorOperation():
 def main():
     while True:
         print("Aqua Botanical System!")
+        restartFlag = False
         timeout = time.time() + 1800 # 30 minutes
         while time.time() < timeout:
             if gAbnormalState['abnormalORP'] == False and \
@@ -386,18 +387,20 @@ def main():
                 sensorPerception()
             else:
                 sensorOperation()
-                main()
-        timeout = time.time() + 300 # 5 minutes
-        while time.time() < timeout:
-            time.sleep(10)
-            circulation()
-        waterLevelDetection()
-        while gFeedingTankWaterLevel != 1 and gFilteringTankWaterLevel != 1:
-            waterLevelJudgementSecondStepInCirculation()
-            time.sleep(10)
+                restartFlag = True
+                break
+        if restartFlag == False:
+            timeout = time.time() + 300 # 5 minutes
+            while time.time() < timeout:
+                time.sleep(10)
+                circulation()
             waterLevelDetection()
-        motorControl(0, 0)
-        print("Restart circulation")
+            while gFeedingTankWaterLevel != 1 and gFilteringTankWaterLevel != 1:
+                waterLevelJudgementSecondStepInCirculation()
+                time.sleep(10)
+                waterLevelDetection()
+            motorControl(0, 0)
+            print("Restart circulation")
 
 if __name__ == "__main__":
     main()
