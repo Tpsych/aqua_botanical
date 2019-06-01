@@ -235,7 +235,7 @@ def waterLevelJudgementFirstStepInCirculation():
     else:
         motorControl(0, 0)
         fillingMotorControl(1)
-        checkFeedingTankWaterLevel(1)
+        checkFeedingTankWaterLevel(2)
         fillingMotorControl(0)
 
 def waterLevelJudgementSecondStepInCirculation():
@@ -261,7 +261,7 @@ def waterLevelJudgementSecondStepInCirculation():
     else:
         motorControl(0, 0)
         fillingMotorControl(1)
-        checkFeedingTankWaterLevel(1)
+        checkFeedingTankWaterLevel(2)
         fillingMotorControl(0)
 
 def circulation():
