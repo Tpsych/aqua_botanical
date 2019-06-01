@@ -9,32 +9,37 @@ import time
 #Sensor Info
 PORT_NAME = '/dev/tty.usbserial-DN03VH4V'
 BAUDRATE = 9600
-BOX_ID = 99
-ORP_ID = 1
-PH_ID = 2
-TEMP_ID = 3
-OXYGEN_ID = 4
-SALT_ID = 5
-WATER1_HIGH_ID = 6
-WATER1_LOW_ID = 7
-WATER2_HIGH_ID = 8
-WATER2_LOW_ID = 9
-PUMP_ID = 10
-HEATER_ID = 11
-FEEDIND_MOTOR_ID = 12
-FILTERING_MOTOR_ID = 13
-FILLING_MOTOR_ID = 14
-MAGNETIC_DOOR_ID = 15
-BUZZER_ID = 16
+# part id
+# box 1
+BOX1_ID = 99
+ORP_ID = 4
+PH_ID = 3
+TEMP_ID = 13
+OXYGEN_ID = 1
+SALT_ID = 2
+WATER1_HIGH_ID = 15
+WATER1_LOW_ID = 16
+WATER2_HIGH_ID = 11
+WATER2_LOW_ID = 12
+PUMP_ID = 7
+FEEDIND_MOTOR_ID = 6
+FILTERING_MOTOR_ID = 5
 
-#Global sensor objects
-gSensorsId = SensorAssignment(ORP_ID, PH_ID, TEMP_ID, OXYGEN_ID, SALT_ID, \
+# box 2
+BOX2_ID = 98
+HEATER_ID = 3
+FILLING_MOTOR_ID = 1
+LED_ID = 2
+MAGNETIC_DOOR_ID = 4
+BUZZER_ID = 5
+
+# init monitor
+box1_sensors_id = Box1SensorAssignment(ORP_ID, PH_ID, TEMP_ID, OXYGEN_ID, SALT_ID,\
 WATER1_HIGH_ID, WATER1_LOW_ID, WATER2_HIGH_ID, WATER2_LOW_ID)
-
-gActuatorsId = ActuatorAssignment(PUMP_ID, HEATER_ID, FEEDIND_MOTOR_ID, \
-FILTERING_MOTOR_ID, FILLING_MOTOR_ID, MAGNETIC_DOOR_ID, BUZZER_ID)
-
-gMonitor1 = Monitor(PORT_NAME, BAUDRATE, BOX_ID, gSensorsId, gActuatorsId)
+box1_actuators_id = Box1ActuatorAssignment(PUMP_ID, FEEDIND_MOTOR_ID, FILTERING_MOTOR_ID)
+box2_actuators_id = Box2ActuatorAssignment(HEATER_ID, FILLING_MOTOR_ID, LED_ID, MAGNETIC_DOOR_ID, BUZZER_ID)
+monitor1 = Monitor1(PORT_NAME, BAUDRATE, BOX1_ID, box1_sensors_id, box1_actuators_id)
+monitor2 = Monitor2(PORT_NAME, BAUDRATE, BOX2_ID, box2_actuators_id)
 
 #Constants
 HIGH_ORP_THRESHOLD = 250 #mv
@@ -72,7 +77,7 @@ gAbnormalState = dict(
 
 def warningBuzzer(command):
     print("Warning buzzer")
-    gMonitor.writeBuzzer(command)
+    monitor2.writeBuzzer(command)
 
 def warningForLowSalt():
     print("Warning for low salt")
@@ -82,8 +87,8 @@ def warningForLowSalt():
 
 def orpPerception():
     print("ORP perception, the orp value now is: ")
-    print(gMonitor.readORP())
-    gORP = gMonitor.readORP()
+    print(monitor1.readORP())
+    gORP = monitor1.readORP()
     fileDate = strftime("%m_%d_%Y")
     fileExist = os.path.isfile("/home/pi/Desktop/sensor_data/" + fileDate + "/orp")
     if fileExist:
@@ -98,8 +103,8 @@ def orpPerception():
 
 def phPerception():
     print("PH perception, the ph value now is: ")
-    print(gMonitor.readPH())
-    gPH = gMonitor.readPH()
+    print(monitor1.readPH())
+    gPH = monitor1.readPH()
     fileDate = strftime("%m_%d_%Y")
     fileExist = os.path.isfile("/home/pi/Desktop/sensor_data/" + fileDate + "/ph")
     if fileExist:
@@ -114,8 +119,8 @@ def phPerception():
 
 def temperaturePerception():
     print("Temperature perception, the temperature value now is: ")
-    print(gMonitor.readtemp())
-    gTemperature = gMonitor.readtemp()
+    print(monitor1.readtemp())
+    gTemperature = monitor1.readtemp()
     fileDate = strftime("%m_%d_%Y")
     fileExist = os.path.isfile("/home/pi/Desktop/sensor_data/" + fileDate + "/temperature")
     if fileExist:
@@ -131,8 +136,8 @@ def temperaturePerception():
 
 def oxygenPerception():
     print("Oxygen perception, the oxygen value now is: ")
-    print(gMonitor.readOxygen())
-    gOxygen = gMonitor.readOxygen()
+    print(monitor1.readOxygen())
+    gOxygen = monitor1.readOxygen()
     fileDate = strftime("%m_%d_%Y")
     fileExist = os.path.isfile("/home/pi/Desktop/sensor_data/" + fileDate + "/oxygen")
     if fileExist:
@@ -147,8 +152,8 @@ def oxygenPerception():
 
 def saltPerception():
     print("Salt perception, the salt value now is: ")
-    print(gMonitor.readSalt())
-    gSalt = gMonitor.readSalt()
+    print(monitor1.readSalt())
+    gSalt = monitor1.readSalt()
     fileDate = strftime("%m_%d_%Y")
     fileExist = os.path.isfile("/home/pi/Desktop/sensor_data/" + fileDate + "/salt")
     if fileExist:
@@ -164,25 +169,25 @@ def saltPerception():
 
 def pumpOxygen(command):
     print("Pump Oxygen")
-    gMonitor.writePump(command)
+    monitor1.writePump(command)
 
 #Turn on/off heater
 def heaterControl(command):
     print("Heater control")
-    gMonitor.writeHeater(command)
+    monitor2.writeHeater(command)
 
 #Get gFeedingTankWaterLevel and gFilteringTankWaterLevel
 def waterLevelDetection():
     print("Water level detection")
-    if readWater1High() == True and readWater1Low() == True:
+    if monitor1.readWater1High() == True and monitor1.readWater1Low() == True:
         gFeedingTankWaterLevel = 2
-    elif readWater1High() == False and readWater1Low() == True:
+    elif monitor1.readWater1High() == False and monitor1.readWater1Low() == True:
         gFeedingTankWaterLevel = 1
     else:
         gFeedingTankWaterLevel =0
-    if readWater2High() == True and readWater2Low() == True:
+    if monitor1.readWater2High() == True and monitor1.readWater2Low() == True:
         gFilteringTankWaterLevel = 2
-    elif readWater2High() == False and readWater2Low() == True:
+    elif monitor1.readWater2High() == False and monitor1.readWater2Low() == True:
         gFilteringTankWaterLevel = 1
     else:
         gFilteringTankWaterLevel =0
@@ -190,18 +195,18 @@ def waterLevelDetection():
 #Turn on/off motors in feeding/filtering tank
 def motorControl(feedingMotorCommand, filteringMotorCommand):
     print("Motor control")
-    gMonitor.writeFeedingMotor(feedingMotorCommand)
-    gMonitor.writeFilteringMotor(filteringMotorCommand)
+    monitor1.writeFeedingMotor(feedingMotorCommand)
+    monitor1.writeFilteringMotor(filteringMotorCommand)
 
 #Turn/off filling motor
 def fillingMotorControl(command):
     print("Filling Motor Control")
-    gMonitor.writeFillingMotor(command)
+    monitor2.writeFillingMotor(command)
 
 #Turn on/off electrical Door
 def electricalMagneticDoor(command):
     print("Electrical magnetic door")
-    gMonitor.writeMagneticDoor(command)
+    monitor2.writeMagneticDoor(command)
 
 def checkFeedingTankWaterLevel(expectedLevel):
     while gFeedingTankWaterLevel != expectedLevel:
