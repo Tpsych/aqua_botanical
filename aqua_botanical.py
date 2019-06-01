@@ -269,7 +269,6 @@ def circulation():
     waterLevelJudgementFirstStepInCirculation()
 
 def sensorPerception():
-    todayDate = date.today()
     orpPerception()
     phPerception()
     temperaturePerception()
