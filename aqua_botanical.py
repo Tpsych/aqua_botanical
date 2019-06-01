@@ -34,7 +34,7 @@ WATER1_HIGH_ID, WATER1_LOW_ID, WATER2_HIGH_ID, WATER2_LOW_ID)
 gActuatorsId = ActuatorAssignment(PUMP_ID, HEATER_ID, FEEDIND_MOTOR_ID, \
 FILTERING_MOTOR_ID, FILLING_MOTOR_ID, MAGNETIC_DOOR_ID, BUZZER_ID)
 
-gMonitor = Monitor(PORT_NAME, BAUDRATE, BOX_ID, gSensorsId, gActuatorsId)
+gMonitor1 = Monitor(PORT_NAME, BAUDRATE, BOX_ID, gSensorsId, gActuatorsId)
 
 #Constants
 HIGH_ORP_THRESHOLD = 250 #mv
@@ -85,7 +85,7 @@ def warningForLowSalt():
     warningBuzzer(0)
 
 def orpPerception():
-    print("ORP perception, the orp value now is:")
+    print("ORP perception, the orp value now is: ")
     print(gMonitor.readORP())
     gORP = gMonitor.readORP()
     fileDate = strftime("%m_%d_%Y")
@@ -101,7 +101,7 @@ def orpPerception():
         gAbnormalState['abnormalORP'] = True
 
 def phPerception():
-    print("PH perception, the ph value now is:")
+    print("PH perception, the ph value now is: ")
     print(gMonitor.readPH())
     gPH = gMonitor.readPH()
     fileDate = strftime("%m_%d_%Y")
@@ -117,7 +117,7 @@ def phPerception():
         gAbnormalState['abnormalPH'] = True
 
 def temperaturePerception():
-    print("Temperature perception, the temperature value now is:")
+    print("Temperature perception, the temperature value now is: ")
     print(gMonitor.readtemp())
     gTemperature = gMonitor.readtemp()
     fileDate = strftime("%m_%d_%Y")
@@ -134,7 +134,7 @@ def temperaturePerception():
         gAbnormalState['abnormalTemperature'] = True
 
 def oxygenPerception():
-    print("Oxygen perception, the oxygen value now is:")
+    print("Oxygen perception, the oxygen value now is: ")
     print(gMonitor.readOxygen())
     gOxygen = gMonitor.readOxygen()
     fileDate = strftime("%m_%d_%Y")
@@ -150,7 +150,7 @@ def oxygenPerception():
         gAbnormalState['abnormalOxygen'] = True
 
 def saltPerception():
-    print("Salt perception, the salt value now is:")
+    print("Salt perception, the salt value now is: ")
     print(gMonitor.readSalt())
     gSalt = gMonitor.readSalt()
     fileDate = strftime("%m_%d_%Y")
