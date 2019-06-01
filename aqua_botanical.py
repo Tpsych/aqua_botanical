@@ -47,7 +47,7 @@ LOW_ORP_THRESHOLD = 200 #mv
 HIGH_PH_THRESHOLD_1 = 8.5
 HIGH_PH_THRESHOLD_2 = 8
 LOW_PH_THRESHOLD_1 = 6.5
-LOW_PH_THRESHOLD = 7
+LOW_PH_THRESHOLD_2 = 7
 LOW_TEMPERATURE_THRESHOLD = 20
 MID_TEMPERATURE_THRESHOLD = 25
 HIGH_TEMPERATURE_THRESHOLD = 30
@@ -393,7 +393,7 @@ def orpOperation():
                     time.sleep(2)
             else:
                 orpPerception()
-                if gORP > MID_SALT_THRESHOLD:
+                if gORP > HIGH_ORP_THRESHOLD:
                     break
                 else:
                     timeout = time.time() + 30
