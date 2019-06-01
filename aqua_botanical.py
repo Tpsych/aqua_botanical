@@ -292,6 +292,7 @@ def temperatureOperation():
         heaterControl(1)
         while gTemperature < MID_TEMPERATURE_THRESHOLD and \
         time.time() < timeout:
+            circulation()
             time.sleep(10)
             temperaturePerception()
         heaterControl(0)
