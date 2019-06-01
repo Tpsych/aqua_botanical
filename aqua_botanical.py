@@ -280,21 +280,31 @@ def temperatureOperation():
     global gTemperature
     if gTemperature > HIGH_TEMPERATURE_THRESHOLD:
         timeout = time.time() + 300
-        while gTemperature > MID_TEMPERATURE_THRESHOLD and \
-        time.time() < timeout:
-            circulation()
-            time.sleep(5)
-            temperaturePerception()
+        while:
+            if time.time() < timeout:
+                circulation()
+                time.sleep(10)
+            else:
+                temperaturePerception()
+                if gTemperature < MID_TEMPERATURE_THRESHOLD:
+                    break
+                else:
+                    timeout = time.time() + 300
         gAbnormalState['abnormalTemperature'] = False
 
     if gTemperature < LOW_TEMPERATURE_THRESHOLD:
         timeout = time.time() + 300
         heaterControl(1)
-        while gTemperature < MID_TEMPERATURE_THRESHOLD and \
-        time.time() < timeout:
-            circulation()
-            time.sleep(10)
-            temperaturePerception()
+        while:
+            if time.time() < timeout:
+                circulation()
+                time.sleep(10)
+            else:
+                temperaturePerception()
+                if gTemperature > MID_TEMPERATURE_THRESHOLD:
+                    break
+                else:
+                    timeout = time.time() + 300
         heaterControl(0)
         gAbnormalState['abnormalTemperature'] = False
 
