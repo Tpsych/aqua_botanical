@@ -7,7 +7,7 @@ import os.path
 import time
 
 #Sensor Info
-PORT_NAME = '/dev/tty.usbserial-DN03VH4V'
+PORT_NAME = '/dev/ttyUSB0'
 BAUDRATE = 9600
 # part id
 # box 1
