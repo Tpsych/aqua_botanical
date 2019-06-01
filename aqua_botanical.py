@@ -387,6 +387,7 @@ def main():
             else:
                 sensorOperation()
                 restartFlag = True
+                print("Restart circulation")
                 break
         if restartFlag == False:
             timeout = time.time() + 300 # 5 minutes
