@@ -2,6 +2,7 @@
 #Author: Barry Hao, Tony Tsai
 
 from sensor_monitor import *
+from datetime import date
 import time
 
 #Sensor Info
@@ -82,15 +83,16 @@ def warningForLowSalt():
     time.sleep(10)
     warningBuzzer(0)
 
-def orpPerception():
+def orpPerception(todayDate):
     print("ORP perception, the orp value now is:")
     print(gMonitor.readORP())
     gORP = gMonitor.readORP()
+    fileDate = todayDate.strftime("%m_%d_%Y")
 
     if gORP < LOW_ORP_THRESHOLD:
         gAbnormalState['abnormalORP'] = True
 
-def phPerception():
+def phPerception(todayDate):
     print("PH perception, the ph value now is:")
     print(gMonitor.readPH())
     gPH = gMonitor.readPH()
@@ -99,7 +101,7 @@ def phPerception():
     gPH < LOW_PH_THRESHOLD_1:
         gAbnormalState['abnormalPH'] = True
 
-def temperaturePerception():
+def temperaturePerception(todayDate):
     print("Temperature perception, the temperature value now is:")
     print(gMonitor.readtemp())
     gTemperature = gMonitor.readtemp()
@@ -108,7 +110,7 @@ def temperaturePerception():
     gTemperature < LOW_TEMPERATURE_THRESHOLD:
         gAbnormalState['abnormalTemperature'] = True
 
-def oxygenPerception():
+def oxygenPerception(todayDate):
     print("Oxygen perception, the oxygen value now is:")
     print(gMonitor.readOxygen())
     gOxygen = gMonitor.readOxygen()
@@ -116,7 +118,7 @@ def oxygenPerception():
     if gOxygen < LOW_OXYGEN_THRESHOLD:
         gAbnormalState['abnormalOxygen'] = True
 
-def saltPerception():
+def saltPerception(todayDate):
     print("Salt perception, the salt value now is:")
     print(gMonitor.readSalt())
     gSalt = gMonitor.readSalt()
@@ -228,11 +230,12 @@ def circulation():
     waterLevelJudgementFirstStepInCirculation()
 
 def sensorPerception():
-    orpPerception()
-    phPerception()
-    temperaturePerception()
-    saltPerception()
-    oxygenPerception()
+    todayDate = date.today()
+    orpPerception(todayDate)
+    phPerception(todayDate)
+    temperaturePerception(todayDate)
+    saltPerception(todayDate)
+    oxygenPerception(todayDate)
 
 def temperatureOperation():
     print("Abnormal temperature operation")
