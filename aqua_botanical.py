@@ -2,7 +2,8 @@
 #Author: Barry Hao, Tony Tsai
 
 from sensor_monitor import *
-from datetime import date
+from time import *
+import os.path
 import time
 
 #Sensor Info
@@ -83,45 +84,83 @@ def warningForLowSalt():
     time.sleep(10)
     warningBuzzer(0)
 
-def orpPerception(todayDate):
+def orpPerception():
     print("ORP perception, the orp value now is:")
     print(gMonitor.readORP())
     gORP = gMonitor.readORP()
-    fileDate = todayDate.strftime("%m_%d_%Y")
+    fileDate = strftime("%m_%d_%Y")
+    fileExist = os.path.isfile("/path_in_raspberry_pi")
+    if fileExist:
+        f = open("/path_in_raspberry_pi", "a")
+        f.write(strftime("%H:%M:%S")+ ' ' + gORP)
+        f.close()
+    else:
+        print("File not created")
 
     if gORP < LOW_ORP_THRESHOLD:
         gAbnormalState['abnormalORP'] = True
 
-def phPerception(todayDate):
+def phPerception():
     print("PH perception, the ph value now is:")
     print(gMonitor.readPH())
     gPH = gMonitor.readPH()
-
+    fileDate = strftime("%m_%d_%Y")
+    fileExist = os.path.isfile("/path_in_raspberry_pi")
+    if fileExist:
+        f = open("/path_in_raspberry_pi", "a")
+        f.write(strftime("%H:%M:%S")+ ' ' + gPH)
+        f.close()
+    else:
+        print("File not created")
     if gPH > HIGH_PH_THRESHOLD_1 or \
     gPH < LOW_PH_THRESHOLD_1:
         gAbnormalState['abnormalPH'] = True
 
-def temperaturePerception(todayDate):
+def temperaturePerception():
     print("Temperature perception, the temperature value now is:")
     print(gMonitor.readtemp())
     gTemperature = gMonitor.readtemp()
+    fileDate = strftime("%m_%d_%Y")
+    fileExist = os.path.isfile("/path_in_raspberry_pi")
+    if fileExist:
+        f = open("/path_in_raspberry_pi", "a")
+        f.write(strftime("%H:%M:%S")+ ' ' + gTemperature)
+        f.close()
+    else:
+        print("File not created")
 
     if gTemperature > HIGH_TEMPERATURE_THRESHOLD or \
     gTemperature < LOW_TEMPERATURE_THRESHOLD:
         gAbnormalState['abnormalTemperature'] = True
 
-def oxygenPerception(todayDate):
+def oxygenPerception():
     print("Oxygen perception, the oxygen value now is:")
     print(gMonitor.readOxygen())
     gOxygen = gMonitor.readOxygen()
+    fileDate = strftime("%m_%d_%Y")
+    fileExist = os.path.isfile("/path_in_raspberry_pi")
+    if fileExist:
+        f = open("/path_in_raspberry_pi", "a")
+        f.write(strftime("%H:%M:%S")+ ' ' + gOxygen)
+        f.close()
+    else:
+        print("File not created")
 
     if gOxygen < LOW_OXYGEN_THRESHOLD:
         gAbnormalState['abnormalOxygen'] = True
 
-def saltPerception(todayDate):
+def saltPerception():
     print("Salt perception, the salt value now is:")
     print(gMonitor.readSalt())
     gSalt = gMonitor.readSalt()
+    fileDate = strftime("%m_%d_%Y")
+    fileExist = os.path.isfile("/path_in_raspberry_pi")
+    if fileExist:
+        f = open("/path_in_raspberry_pi", "a")
+        f.write(strftime("%H:%M:%S")+ ' ' + gSalt)
+        f.close()
+    else:
+        print("File not created")
 
     if gSalt > HIGH_SALT_THRESHOLD or \
     gSalt < LOW_SALT_THRESHOLD:
@@ -231,11 +270,11 @@ def circulation():
 
 def sensorPerception():
     todayDate = date.today()
-    orpPerception(todayDate)
-    phPerception(todayDate)
-    temperaturePerception(todayDate)
-    saltPerception(todayDate)
-    oxygenPerception(todayDate)
+    orpPerception()
+    phPerception()
+    temperaturePerception()
+    saltPerception()
+    oxygenPerception()
 
 def temperatureOperation():
     print("Abnormal temperature operation")
