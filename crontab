@@ -1,0 +1,2 @@
+0 2 * * * /bin/sh folder_creator.sh
+@reboot bash startup_bash.sh
