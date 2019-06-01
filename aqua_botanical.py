@@ -377,7 +377,6 @@ def main():
         print("Aqua Botanical System!")
         timeout = time.time() + 1800 # 30 minutes
         while time.time() < timeout:
-            # Should create a queue for all abnormal state
             if gAbnormalState['abnormalORP'] == False and \
             gAbnormalState['abnormalPH'] == False and \
             gAbnormalState['abnormalTemperature'] == False and \
