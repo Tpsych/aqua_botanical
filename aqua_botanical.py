@@ -58,13 +58,13 @@ MID_SALT_THRESHOLD = 25
 HIGH_SALT_THRESHOLD = 30
 
 #Read from perception sensors
-gFeedingTankWaterLevel = None # 0 for low, 1 for mid, 2 for high
-gFilteringTankWaterLevel = None # 0 for low, 1 for mid, 2 for high
-gORP = None
-gPH = None
-gTemperature = None
-gOxygen = None
-gSalt = None
+gFeedingTankWaterLevel = 4 # 0 for low, 1 for mid, 2 for high, 4 for initialization
+gFilteringTankWaterLevel = 4 # 0 for low, 1 for mid, 2 for high, 4 for initialization
+gORP = 0
+gPH = 0
+gTemperature = 0
+gOxygen = 0
+gSalt = 0
 
 #Global table for storing abnormal sensor
 gAbnormalState = dict(
@@ -93,7 +93,7 @@ def orpPerception():
     fileExist = os.path.isfile("/home/pi/Desktop/sensor_data/" + fileDate + "/orp")
     if fileExist:
         f = open("/home/pi/Desktop/sensor_data/" + fileDate + "/orp", "a")
-        f.write(strftime("%H:%M:%S")+ ' ' + gORP)
+        f.write(strftime("%H:%M:%S")+ ' ' + str(gORP))
         f.close()
     else:
         print("File not created")
@@ -109,7 +109,7 @@ def phPerception():
     fileExist = os.path.isfile("/home/pi/Desktop/sensor_data/" + fileDate + "/ph")
     if fileExist:
         f = open("/home/pi/Desktop/sensor_data/" + fileDate + "/ph", "a")
-        f.write(strftime("%H:%M:%S")+ ' ' + gPH)
+        f.write(strftime("%H:%M:%S")+ ' ' + str(gPH))
         f.close()
     else:
         print("File not created")
@@ -125,7 +125,7 @@ def temperaturePerception():
     fileExist = os.path.isfile("/home/pi/Desktop/sensor_data/" + fileDate + "/temperature")
     if fileExist:
         f = open("/home/pi/Desktop/sensor_data/" + fileDate + "/temperature", "a")
-        f.write(strftime("%H:%M:%S")+ ' ' + gTemperature)
+        f.write(strftime("%H:%M:%S")+ ' ' + str(gTemperature))
         f.close()
     else:
         print("File not created")
@@ -142,7 +142,7 @@ def oxygenPerception():
     fileExist = os.path.isfile("/home/pi/Desktop/sensor_data/" + fileDate + "/oxygen")
     if fileExist:
         f = open("/home/pi/Desktop/sensor_data/" + fileDate + "/oxygen", "a")
-        f.write(strftime("%H:%M:%S")+ ' ' + gOxygen)
+        f.write(strftime("%H:%M:%S")+ ' ' + str(gOxygen))
         f.close()
     else:
         print("File not created")
@@ -158,7 +158,7 @@ def saltPerception():
     fileExist = os.path.isfile("/home/pi/Desktop/sensor_data/" + fileDate + "/salt")
     if fileExist:
         f = open("/home/pi/Desktop/sensor_data/" + fileDate + "/salt", "a")
-        f.write(strftime("%H:%M:%S")+ ' ' + gSalt)
+        f.write(strftime("%H:%M:%S")+ ' ' + str(gSalt))
         f.close()
     else:
         print("File not created")
@@ -179,33 +179,43 @@ def heaterControl(command):
 #Get gFeedingTankWaterLevel and gFilteringTankWaterLevel
 def waterLevelDetection():
     print("Water level detection")
+    global gFeedingTankWaterLevel
+    global gFilteringTankWaterLevel
     if monitor1.readWater1High() == True and monitor1.readWater1Low() == True:
-        gFeedingTankWaterLevel = 2
-    elif monitor1.readWater1High() == False and monitor1.readWater1Low() == True:
+        gFeedingTankWaterLevel = 0
+    elif monitor1.readWater1High() == True and monitor1.readWater1Low() == False:
         gFeedingTankWaterLevel = 1
     else:
-        gFeedingTankWaterLevel =0
+        gFeedingTankWaterLevel = 2
     if monitor1.readWater2High() == True and monitor1.readWater2Low() == True:
-        gFilteringTankWaterLevel = 2
-    elif monitor1.readWater2High() == False and monitor1.readWater2Low() == True:
+        gFilteringTankWaterLevel = 0
+    elif monitor1.readWater2High() == True and monitor1.readWater2Low() == False:
         gFilteringTankWaterLevel = 1
     else:
-        gFilteringTankWaterLevel =0
+        gFilteringTankWaterLevel = 2
+    print("Feeding tank level")
+    print(gFeedingTankWaterLevel)
+    print("Filtering tank level")
+    print(gFilteringTankWaterLevel)
 
 #Turn on/off motors in feeding/filtering tank
 def motorControl(feedingMotorCommand, filteringMotorCommand):
     print("Motor control")
+    print("Feeding motor command: " + str(feedingMotorCommand))
     monitor1.writeFeedingMotor(feedingMotorCommand)
+    print("Filtering motor command: " + str(filteringMotorCommand))
     monitor1.writeFilteringMotor(filteringMotorCommand)
 
 #Turn/off filling motor
 def fillingMotorControl(command):
     print("Filling Motor Control")
+    print(command)
     monitor2.writeFillingMotor(command)
 
 #Turn on/off electrical Door
 def electricalMagneticDoor(command):
     print("Electrical magnetic door")
+    print(command)
     monitor2.writeMagneticDoor(command)
 
 def checkFeedingTankWaterLevel(expectedLevel):
@@ -214,6 +224,9 @@ def checkFeedingTankWaterLevel(expectedLevel):
         time.sleep(5)
 
 def waterLevelJudgementFirstStepInCirculation():
+    print("Enter first step circulation")
+    print("gFeedingTankWaterLevel in first circulation is: " + str(gFeedingTankWaterLevel))
+    print("gFilteringTankWaterLevel in first circulation is: " + str(gFilteringTankWaterLevel))
     if gFeedingTankWaterLevel == 2 and gFilteringTankWaterLevel == 2:
         motorControl(0, 0)
         electricalMagneticDoor(1)
@@ -240,6 +253,9 @@ def waterLevelJudgementFirstStepInCirculation():
         fillingMotorControl(0)
 
 def waterLevelJudgementSecondStepInCirculation():
+    print("Enter second step circulation")
+    print("gFeedingTankWaterLevel in second circulation is: " + str(gFeedingTankWaterLevel))
+    print("gFilteringTankWaterLevel in second circulation is: " + str(gFilteringTankWaterLevel))
     if gFeedingTankWaterLevel == 2 and gFilteringTankWaterLevel == 2:
         motorControl(0, 0)
         electricalMagneticDoor(1)
@@ -266,6 +282,7 @@ def waterLevelJudgementSecondStepInCirculation():
         fillingMotorControl(0)
 
 def circulation():
+    print("Enter circulation")
     waterLevelDetection()
     waterLevelJudgementFirstStepInCirculation()
 
@@ -280,32 +297,32 @@ def temperatureOperation():
     print("Abnormal temperature operation")
     global gTemperature
     if gTemperature > HIGH_TEMPERATURE_THRESHOLD:
-        timeout = time.time() + 300
+        timeout = time.time() + 30
         while True:
             if time.time() < timeout:
                 circulation()
-                time.sleep(10)
+                time.sleep(2)
             else:
                 temperaturePerception()
                 if gTemperature < MID_TEMPERATURE_THRESHOLD:
                     break
                 else:
-                    timeout = time.time() + 300
+                    timeout = time.time() + 30
         gAbnormalState['abnormalTemperature'] = False
 
     if gTemperature < LOW_TEMPERATURE_THRESHOLD:
-        timeout = time.time() + 300
+        timeout = time.time() + 30
         heaterControl(1)
         while True:
             if time.time() < timeout:
                 circulation()
-                time.sleep(10)
+                time.sleep(2)
             else:
                 temperaturePerception()
                 if gTemperature > MID_TEMPERATURE_THRESHOLD:
                     break
                 else:
-                    timeout = time.time() + 300
+                    timeout = time.time() + 30
         heaterControl(0)
         gAbnormalState['abnormalTemperature'] = False
 
@@ -324,17 +341,17 @@ def saltOperation():
     print("Abnormal salt operation")
     global gSalt
     if gSalt > HIGH_SALT_THRESHOLD:
-        timeout = time.time() + 300
+        timeout = time.time() + 30
         while True:
             if time.time() < timeout:
                     circulation()
-                    time.sleep(5)
+                    time.sleep(2)
             else:
                 saltPerception()
                 if gSalt < MID_SALT_THRESHOLD:
                     break
                 else:
-                    timeout = time.time() + 300
+                    timeout = time.time() + 30
         gAbnormalState['abnormalSalt'] = False
 
     if gSalt < LOW_SALT_THRESHOLD:
@@ -350,35 +367,36 @@ def phOperation():
     global gPH
     if gPH > HIGH_PH_THRESHOLD_1 or \
     gPH < LOW_PH_THRESHOLD_1:
-        timeout = time.time() + 300
+        timeout = time.time() + 30
         while True:
             if time.time() < timeout:
                 circulation()
-                time.sleep(10)
+                time.sleep(2)
             else:
                 phPerception()
                 if gPH < HIGH_PH_THRESHOLD_2 and \
                 gPH > LOW_PH_THRESHOLD_2:
                     break
                 else:
-                    timeout = time.time() + 300
+                    timeout = time.time() + 30
         gAbnormalState['abnormalPH'] = False
 
 def orpOperation():
     print("Abnormal orp operation")
     global gORP
+    print("Current value is: " + str(gORP))
     if gORP < LOW_ORP_THRESHOLD:
-        timeout = time.time() + 300
+        timeout = time.time() + 30
         while True:
             if time.time() < timeout:
                     circulation()
-                    time.sleep(5)
+                    time.sleep(2)
             else:
                 orpPerception()
                 if gORP > MID_SALT_THRESHOLD:
                     break
                 else:
-                    timeout = time.time() + 300
+                    timeout = time.time() + 30
         gAbnormalState['abnormalORP'] = False
 
 def sensorOperation():
@@ -403,14 +421,14 @@ def main():
     while True:
         print("Aqua Botanical System!")
         restartFlag = False
-        timeout = time.time() + 1800 # 30 minutes
+        timeout = time.time() + 40 # 30 minutes
         while time.time() < timeout:
             if gAbnormalState['abnormalORP'] == False and \
             gAbnormalState['abnormalPH'] == False and \
             gAbnormalState['abnormalTemperature'] == False and \
             gAbnormalState['abnormalOxygen'] == False and \
             gAbnormalState['abnormalSalt'] == False:
-                time.sleep(10)
+                time.sleep(5)
                 sensorPerception()
             else:
                 sensorOperation()
@@ -418,14 +436,14 @@ def main():
                 print("Restart circulation")
                 break
         if restartFlag == False:
-            timeout = time.time() + 300 # 5 minutes
+            timeout = time.time() + 30 # 5 minutes
             while time.time() < timeout:
-                time.sleep(10)
+                time.sleep(5)
                 circulation()
             waterLevelDetection()
             while gFeedingTankWaterLevel != 1 and gFilteringTankWaterLevel != 1:
                 waterLevelJudgementSecondStepInCirculation()
-                time.sleep(10)
+                time.sleep(5)
                 waterLevelDetection()
             motorControl(0, 0)
             print("Restart circulation")

@@ -4,7 +4,7 @@ from sensor_monitor import *
 
 def operation():
     # communication setting
-    PORT_NAME = '/dev/tty.usbserial-DA0055Z8'
+    PORT_NAME = '/dev/ttyUSB0'
     BAUDRATE = 9600
 
     # part id
@@ -55,11 +55,11 @@ def operation():
             print(type)
 
     # box1 test
-    # print("ORP:", monitor1.readORP())
-    # print("PH:", monitor1.readPH())
-    # print("temp:", monitor1.readtemp())
-    # print("Oxygen:", monitor1.readOxygen())
-    # print("Salt:", monitor1.readSalt())
+    print("ORP:", monitor1.readORP())
+    print("PH:", monitor1.readPH())
+    print("temp:", monitor1.readtemp())
+    print("Oxygen:", monitor1.readOxygen())
+    print("Salt:", monitor1.readSalt())
     # print("Water1High:", monitor1.readWater1High())
     # print("Water1Low:", monitor1.readWater1Low())
     # print("Water2High:", monitor1.readWater2High())

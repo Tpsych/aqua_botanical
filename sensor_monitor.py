@@ -41,7 +41,9 @@ class Monitor1:
         if answer == None:
             return
         else:
-            answer = ((answer - 800.0) / 3200.0 * 200.0)
+	    print("answer:",answer)
+           # answer = ((answer - 800.0) / 3200.0 * 2998.0) - 999.0
+	    answer = ((answer - 800.0) / 3200.0 * 140.0)
             return answer
 
     def readPH(self):
@@ -49,6 +51,7 @@ class Monitor1:
         if answer == None:
             return
         else:
+	    print("answer:",answer)
             answer = ((answer - 800.0) / 3200.0 * 14.0)
             return answer
 
@@ -57,6 +60,7 @@ class Monitor1:
         if answer == None:
             return
         else:
+            print("answer:",answer)
             return answer / 10.0
 
     def readOxygen(self):
@@ -64,8 +68,9 @@ class Monitor1:
         if answer == None:
             return
         else:
+            print("answer:",answer)
             # answer = ((answer/200.0 - 4.0) * 20.0 / 16.0)
-            answer = ((answer - 800.0) / 3200.0 * 20.0)
+            answer = ((answer - 800.0) / 3200.0 * 2.0)
             return answer
 
     def readSalt(self):
@@ -73,6 +78,7 @@ class Monitor1:
         if answer == None:
             return
         else:
+            print("answer:",answer)
             # answer = ((answer/200.0 - 4.0) * (66.7-1.32) / 16.0 + 1.32) * 10.0
             if answer < 800:
                 print("Salt sensor disconnect")
