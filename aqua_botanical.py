@@ -350,12 +350,17 @@ def phOperation():
     if gPH > HIGH_PH_THRESHOLD_1 or \
     gPH < LOW_PH_THRESHOLD_1:
         timeout = time.time() + 300
-        while gPH > HIGH_PH_THRESHOLD_2 or \
-        gPH < LOW_PH_THRESHOLD_2 and \
-        time.time() < timeout:
-            circulation()
-            time.sleep(5)
-            phPerception()
+        while:
+            if time.time() < timeout:
+                circulation()
+                time.sleep(10)
+            else:
+                phPerception()
+                if gPH < HIGH_PH_THRESHOLD_2 and \
+                gPH > LOW_PH_THRESHOLD_2:
+                    break
+                else:
+                    timeout = time.time() + 300
         gAbnormalState['abnormalPH'] = False
 
 def orpOperation():
