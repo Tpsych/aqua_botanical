@@ -40,43 +40,49 @@ def operation():
     monitor2 = Monitor2(PORT_NAME, BAUDRATE, BOX2_ID, box2_actuators_id)
 
     # test{
-    # answer = monitor1.modbus.sensorOFF(9)
-    # if answer == None:
-    #     print("control fault")
-    # else:
-    #     print("control success")
-
-    board_type_list = monitor1.modbus.checkIOBoardType(0xE0)
-
-    if board_type_list == None:
-        print("No answer")
+    box1_type_list = monitor1.modbus.checkIOBoardType(0xE0)
+    if box1_type_list == None:
+        print("No answer form box1")
     else:
-        for type in board_type_list:
+        print("box1_type_list:")
+        for type in box1_type_list:
+            print(type)
+
+    box2_type_list = monitor2.modbus.checkIOBoardType(0xE0)
+    if box2_type_list == None:
+        print("No answer form box2")
+    else:
+        print("box2_type_list:")
+        for type in box2_type_list:
             print(type)
 
     # box1 test
-    print("ORP:", monitor1.readORP())
-    print("PH:", monitor1.readPH())
-    print("temp:", monitor1.readtemp())
-    print("Oxygen:", monitor1.readOxygen())
-    print("Salt:", monitor1.readSalt())
-    # print("Water1High:", monitor1.readWater1High())
-    # print("Water1Low:", monitor1.readWater1Low())
-    # print("Water2High:", monitor1.readWater2High())
-    # print("Water2Low:", monitor1.readWater2Low())
+    if board1_type_list != None:
+        print("test box1")
+        print("ORP:", monitor1.readORP())
+        print("PH:", monitor1.readPH())
+        print("temp:", monitor1.readtemp())
+        print("Oxygen:", monitor1.readOxygen())
+        print("Salt:", monitor1.readSalt())
+        print("Water1High:", monitor1.readWater1High())
+        print("Water1Low:", monitor1.readWater1Low())
+        print("Water2High:", monitor1.readWater2High())
+        print("Water2Low:", monitor1.readWater2Low())
 
-    # value = 0
-    # print(monitor2.modbus.registerRead(11))
-    # print("writePump:", monitor1.writePump(value))
-    # print("writeFeedingMotor:", monitor1.writeFeedingMotor(value))
-    # print("writeFilteringMotor:", monitor1.writeFilteringMotor(value))
-    #
-    # # box2 test
-    # print("writeHeater:", monitor2.writeHeater(value))
-    # print("writeFillingMotor:", monitor2.writeFillingMotor(value))
-    # print("writeMagneticDoor:", monitor2.writeMagneticDoor(value))
-    # print("writeLED:", monitor2.writeLED(value))
-    # print("writeBuzzer:", monitor2.writeBuzzer(value))
+        value_for_testing_box1 = 0
+        print("writePump:", monitor1.writePump(value_for_testing_box1))
+        print("writeFeedingMotor:", monitor1.writeFeedingMotor(value_for_testing_box1))
+        print("writeFilteringMotor:", monitor1.writeFilteringMotor(value_for_testing_box1))
+
+    # box2 test
+    if board2_type_list != None:
+        print("test box2")
+        value_for_testing_box2 = 0
+        print("writeHeater:", monitor2.writeHeater(value_for_testing_box2))
+        print("writeFillingMotor:", monitor2.writeFillingMotor(value_for_testing_box2))
+        print("writeMagneticDoor:", monitor2.writeMagneticDoor(value_for_testing_box2))
+        print("writeLED:", monitor2.writeLED(value_for_testing_box2))
+        print("writeBuzzer:", monitor2.writeBuzzer(value_for_testing_box2))
     # }test
 
 def main():

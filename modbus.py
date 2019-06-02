@@ -16,7 +16,7 @@ class Modbus:
     def __init__(self, port_name, baudrate, box_ID):
         modbus_library.BAUDRATE = baudrate
         self.instrument = modbus_library.Instrument(port_name, box_ID, mode ='rtu')
-        self.instrument.debug = True
+        self.instrument.debug = False
         self.instrument.serial.bytesize = 8
         self.instrument.serial.parity   = serial.PARITY_EVEN
         self.instrument.serial.stopbits = 1

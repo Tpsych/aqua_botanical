@@ -41,26 +41,34 @@ class Monitor1:
         if answer == None:
             return
         else:
-	    print("answer:",answer)
-           # answer = ((answer - 800.0) / 3200.0 * 2998.0) - 999.0
-	    answer = ((answer - 800.0) / 3200.0 * 140.0)
-            return answer
+    	    # print("answer:",answer)
+            if answer < 800:
+                print("ORP sensor disconnect")
+                return
+            else:
+                # answer = ((answer - 800.0) / 3200.0 * 2998.0) - 999.0
+                answer = (answer - 800.0) / 3200.0 * 14.0
+                return answer
 
     def readPH(self):
         answer =  self.modbus.registerRead(self.sensors_id.PH, signed = False)
         if answer == None:
             return
         else:
-	    print("answer:",answer)
-            answer = ((answer - 800.0) / 3200.0 * 14.0)
-            return answer
+            # print("answer:",answer)
+            if answer < 800:
+                print("PH sensor disconnect")
+                return
+            else:
+                answer = (answer - 800.0) / 3200.0 * 14.0
+                return answer
 
     def readtemp(self):
         answer = self.modbus.registerRead(self.sensors_id.temp)
         if answer == None:
             return
         else:
-            print("answer:",answer)
+            # print("answer:",answer)
             return answer / 10.0
 
     def readOxygen(self):
@@ -68,10 +76,14 @@ class Monitor1:
         if answer == None:
             return
         else:
-            print("answer:",answer)
-            # answer = ((answer/200.0 - 4.0) * 20.0 / 16.0)
-            answer = ((answer - 800.0) / 3200.0 * 2.0)
-            return answer
+            # print("answer:",answer)
+            if answer < 800:
+                print("Oxygen sensor disconnect")
+                return
+            else:
+                # answer = ((answer/200.0 - 4.0) * 20.0 / 16.0)
+                answer = (answer - 800.0) / 3200.0 * 20.0
+                return answer
 
     def readSalt(self):
         answer = self.modbus.registerRead(self.sensors_id.salt)
@@ -79,12 +91,12 @@ class Monitor1:
             return
         else:
             print("answer:",answer)
-            # answer = ((answer/200.0 - 4.0) * (66.7-1.32) / 16.0 + 1.32) * 10.0
             if answer < 800:
                 print("Salt sensor disconnect")
                 return
             else:
-                answer = ((answer - 800.0) / 3200.0 * 600.0)
+                # answer = ((answer/200.0 - 4.0) * (66.7-1.32) / 16.0 + 1.32) * 10.0
+                answer = (answer - 800.0) / 3200.0 * 600.0
                 return answer
 
     def readWater1High(self):
@@ -150,7 +162,7 @@ class Monitor2:
         if value == 0 or value == 1:
             return self.modbus.registerWrite(self.actuators_id.led, value)
         else:
-            print("Buzzer control parameter fault")
+            print("LED control parameter fault")
             return
 
     def writeBuzzer(self, value):
