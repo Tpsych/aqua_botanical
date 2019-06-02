@@ -92,6 +92,8 @@ class Modbus:
             if signed == True:
                 value = twos_complement(hex(int(value)), 16)
 
+            if self.instrument.debug:
+                print("response value:", value)
             return value
 
     def registerWrite(self, registeraddress, value):

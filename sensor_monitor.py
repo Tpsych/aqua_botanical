@@ -90,7 +90,7 @@ class Monitor1:
         if answer == None:
             return
         else:
-            print("answer:",answer)
+            # print("answer:",answer)
             if answer < 800:
                 print("Salt sensor disconnect")
                 return
