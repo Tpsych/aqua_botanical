@@ -93,7 +93,7 @@ def orpPerception():
     fileExist = os.path.isfile("/home/pi/Desktop/sensor_data/" + fileDate + "/orp")
     if fileExist:
         f = open("/home/pi/Desktop/sensor_data/" + fileDate + "/orp", "a")
-        f.write(strftime("%H:%M:%S")+ ' ' + str(gORP))
+        f.write(strftime("%H:%M:%S") + ' ' + str(gORP) + '\n')
         f.close()
     else:
         print("File not created")
@@ -109,7 +109,7 @@ def phPerception():
     fileExist = os.path.isfile("/home/pi/Desktop/sensor_data/" + fileDate + "/ph")
     if fileExist:
         f = open("/home/pi/Desktop/sensor_data/" + fileDate + "/ph", "a")
-        f.write(strftime("%H:%M:%S")+ ' ' + str(gPH))
+        f.write(strftime("%H:%M:%S") + ' ' + str(gPH) + '\n')
         f.close()
     else:
         print("File not created")
@@ -125,7 +125,7 @@ def temperaturePerception():
     fileExist = os.path.isfile("/home/pi/Desktop/sensor_data/" + fileDate + "/temperature")
     if fileExist:
         f = open("/home/pi/Desktop/sensor_data/" + fileDate + "/temperature", "a")
-        f.write(strftime("%H:%M:%S")+ ' ' + str(gTemperature))
+        f.write(strftime("%H:%M:%S") + ' ' + str(gTemperature) + '\n')
         f.close()
     else:
         print("File not created")
@@ -142,7 +142,7 @@ def oxygenPerception():
     fileExist = os.path.isfile("/home/pi/Desktop/sensor_data/" + fileDate + "/oxygen")
     if fileExist:
         f = open("/home/pi/Desktop/sensor_data/" + fileDate + "/oxygen", "a")
-        f.write(strftime("%H:%M:%S")+ ' ' + str(gOxygen))
+        f.write(strftime("%H:%M:%S") + ' ' + str(gOxygen) + '\n')
         f.close()
     else:
         print("File not created")
@@ -158,7 +158,7 @@ def saltPerception():
     fileExist = os.path.isfile("/home/pi/Desktop/sensor_data/" + fileDate + "/salt")
     if fileExist:
         f = open("/home/pi/Desktop/sensor_data/" + fileDate + "/salt", "a")
-        f.write(strftime("%H:%M:%S")+ ' ' + str(gSalt))
+        f.write(strftime("%H:%M:%S") + ' ' + str(gSalt) + '\n')
         f.close()
     else:
         print("File not created")
