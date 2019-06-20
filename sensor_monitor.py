@@ -47,7 +47,7 @@ class Monitor1:
                 return
             else:
                 # answer = ((answer - 800.0) / 3200.0 * 2998.0) - 999.0
-                answer = (answer - 800.0) / 3200.0 * 14.0
+                answer = 0.3168 * answer - 255.02
                 return answer
 
     def readPH(self):
@@ -60,7 +60,7 @@ class Monitor1:
                 print("PH sensor disconnect")
                 return
             else:
-                answer = (answer - 800.0) / 3200.0 * 14.0
+                answer = 0.0044 * answer - 3.576
                 return answer
 
     def readtemp(self):
@@ -82,7 +82,7 @@ class Monitor1:
                 return
             else:
                 # answer = ((answer/200.0 - 4.0) * 20.0 / 16.0)
-                answer = (answer - 800.0) / 3200.0 * 20.0
+                answer = 0.0063 * answer - 5.0807
                 return answer
 
     def readSalt(self):
@@ -96,7 +96,7 @@ class Monitor1:
                 return
             else:
                 # answer = ((answer/200.0 - 4.0) * (66.7-1.32) / 16.0 + 1.32) * 10.0
-                answer = (answer - 800.0) / 3200.0 * 600.0
+                answer = 0.3862 * answer - 215.25
                 return answer
 
     def readWater1High(self):
