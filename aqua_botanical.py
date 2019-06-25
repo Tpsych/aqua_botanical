@@ -41,7 +41,8 @@ box2_actuators_id = Box2ActuatorAssignment(HEATER_ID, FILLING_MOTOR_ID, LED_ID, 
 monitor1 = Monitor1(PORT_NAME, BAUDRATE, BOX1_ID, box1_sensors_id, box1_actuators_id)
 monitor2 = Monitor2(PORT_NAME, BAUDRATE, BOX2_ID, box2_actuators_id)
 
-#Constants
+############# START OF USER_DEFINE #############
+# Constants
 HIGH_ORP_THRESHOLD = 250 #mv
 LOW_ORP_THRESHOLD = 200 #mv
 HIGH_PH_THRESHOLD_1 = 8.5
@@ -56,6 +57,7 @@ HIGH_OXYGEN_THRESHOLD = 6.5 #ppm
 LOW_SALT_THRESHOLD = 200
 MID_SALT_THRESHOLD = 300
 HIGH_SALT_THRESHOLD = 400
+############# END OF USER_DEFINE ###############
 
 #Read from perception sensors
 gFeedingTankWaterLevel = 4 # 0 for low, 1 for mid, 2 for high, 4 for initialization
@@ -82,7 +84,7 @@ def warningBuzzer(command):
 def warningForLowSalt():
     print("Warning for low salt")
     warningBuzzer(1)
-    time.sleep(10)
+    time.sleep(10) ### USER_DEFINE ###
     warningBuzzer(0)
 
 def orpPerception():
@@ -221,7 +223,7 @@ def electricalMagneticDoor(command):
 def checkFeedingTankWaterLevel(expectedLevel):
     while gFeedingTankWaterLevel != expectedLevel:
         waterLevelDetection()
-        time.sleep(5)
+        time.sleep(5) ### USER_DEFINE ###
 
 def waterLevelJudgementFirstStepInCirculation():
     print("Enter first step circulation")
@@ -297,32 +299,32 @@ def temperatureOperation():
     print("Abnormal temperature operation")
     global gTemperature
     if gTemperature > HIGH_TEMPERATURE_THRESHOLD:
-        timeout = time.time() + 30
+        timeout = time.time() + 30 ### USER_DEFINE ###
         while True:
             if time.time() < timeout:
                 circulation()
-                time.sleep(2)
+                time.sleep(2) ### USER_DEFINE ###
             else:
                 temperaturePerception()
                 if gTemperature < MID_TEMPERATURE_THRESHOLD:
                     break
                 else:
-                    timeout = time.time() + 30
+                    timeout = time.time() + 30 ### USER_DEFINE ###
         gAbnormalState['abnormalTemperature'] = False
 
     if gTemperature < LOW_TEMPERATURE_THRESHOLD:
-        timeout = time.time() + 30
+        timeout = time.time() + 30 ### USER_DEFINE ###
         heaterControl(1)
         while True:
             if time.time() < timeout:
                 circulation()
-                time.sleep(2)
+                time.sleep(2) ### USER_DEFINE ###
             else:
                 temperaturePerception()
                 if gTemperature > MID_TEMPERATURE_THRESHOLD:
                     break
                 else:
-                    timeout = time.time() + 30
+                    timeout = time.time() + 30 ### USER_DEFINE ###
         heaterControl(0)
         gAbnormalState['abnormalTemperature'] = False
 
@@ -332,7 +334,7 @@ def oxygenOperation():
     if gOxygen < LOW_OXYGEN_THRESHOLD:
         pumpOxygen(1)
         while gOxygen < HIGH_OXYGEN_THRESHOLD:
-            time.sleep(10)
+            time.sleep(10) ### USER_DEFINE ###
             oxygenPerception()
         pumpOxygen(0)
         gAbnormalState['abnormalOxygen'] = False
@@ -341,24 +343,24 @@ def saltOperation():
     print("Abnormal salt operation")
     global gSalt
     if gSalt > HIGH_SALT_THRESHOLD:
-        timeout = time.time() + 30
+        timeout = time.time() + 30 ### USER_DEFINE ###
         while True:
             if time.time() < timeout:
                     circulation()
-                    time.sleep(2)
+                    time.sleep(2) ### USER_DEFINE ###
             else:
                 saltPerception()
                 if gSalt < MID_SALT_THRESHOLD:
                     break
                 else:
-                    timeout = time.time() + 30
+                    timeout = time.time() + 30 ### USER_DEFINE ###
         gAbnormalState['abnormalSalt'] = False
 
     if gSalt < LOW_SALT_THRESHOLD:
         warningForLowSalt()
         while gSalt < MID_SALT_THRESHOLD:
             warningForLowSalt()
-            time.sleep(10)
+            time.sleep(10) ### USER_DEFINE ###
             saltPerception()
         gAbnormalState['abnormalSalt'] = False
 
@@ -367,18 +369,18 @@ def phOperation():
     global gPH
     if gPH > HIGH_PH_THRESHOLD_1 or \
     gPH < LOW_PH_THRESHOLD_1:
-        timeout = time.time() + 30
+        timeout = time.time() + 30 ### USER_DEFINE ###
         while True:
             if time.time() < timeout:
                 circulation()
-                time.sleep(2)
+                time.sleep(2) ### USER_DEFINE ###
             else:
                 phPerception()
                 if gPH < HIGH_PH_THRESHOLD_2 and \
                 gPH > LOW_PH_THRESHOLD_2:
                     break
                 else:
-                    timeout = time.time() + 30
+                    timeout = time.time() + 30 ### USER_DEFINE ###
         gAbnormalState['abnormalPH'] = False
 
 def orpOperation():
@@ -386,17 +388,17 @@ def orpOperation():
     global gORP
     print("Current value is: " + str(gORP))
     if gORP < LOW_ORP_THRESHOLD:
-        timeout = time.time() + 30
+        timeout = time.time() + 30 ### USER_DEFINE ###
         while True:
             if time.time() < timeout:
                     circulation()
-                    time.sleep(2)
+                    time.sleep(2) ### USER_DEFINE ###
             else:
                 orpPerception()
                 if gORP > HIGH_ORP_THRESHOLD:
                     break
                 else:
-                    timeout = time.time() + 30
+                    timeout = time.time() + 30 ### USER_DEFINE ###
         gAbnormalState['abnormalORP'] = False
 
 def sensorOperation():
@@ -421,7 +423,7 @@ def main():
     while True:
         print("Aqua Botanical System!")
         restartFlag = False
-        timeout = time.time() + 40 # 30 minutes
+        timeout = time.time() + 40 ### USER_DEFINE ###
         while time.time() < timeout:
             if gAbnormalState['abnormalORP'] == False and \
             gAbnormalState['abnormalPH'] == False and \
@@ -436,14 +438,14 @@ def main():
                 print("Restart circulation")
                 break
         if restartFlag == False:
-            timeout = time.time() + 30 # 5 minutes
+            timeout = time.time() + 30 ### USER_DEFINE ###
             while time.time() < timeout:
-                time.sleep(5)
+                time.sleep(5) ### USER_DEFINE ###
                 circulation()
             waterLevelDetection()
             while gFeedingTankWaterLevel != 1 and gFilteringTankWaterLevel != 1:
                 waterLevelJudgementSecondStepInCirculation()
-                time.sleep(5)
+                time.sleep(5) ### USER_DEFINE ###
                 waterLevelDetection()
             motorControl(0, 0)
             print("Restart circulation")
