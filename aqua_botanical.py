@@ -305,7 +305,7 @@ def temperatureOperation():
                 circulation()
                 time.sleep(2) ### USER_DEFINE ###
             else:
-                temperaturePerception()
+                sensorPerception()
                 if gTemperature < MID_TEMPERATURE_THRESHOLD:
                     break
                 else:
@@ -320,7 +320,7 @@ def temperatureOperation():
                 circulation()
                 time.sleep(2) ### USER_DEFINE ###
             else:
-                temperaturePerception()
+                sensorPerception()
                 if gTemperature > MID_TEMPERATURE_THRESHOLD:
                     break
                 else:
@@ -335,7 +335,7 @@ def oxygenOperation():
         pumpOxygen(1)
         while gOxygen < HIGH_OXYGEN_THRESHOLD:
             time.sleep(10) ### USER_DEFINE ###
-            oxygenPerception()
+            sensorPerception()
         pumpOxygen(0)
         gAbnormalState['abnormalOxygen'] = False
 
@@ -349,7 +349,7 @@ def saltOperation():
                     circulation()
                     time.sleep(2) ### USER_DEFINE ###
             else:
-                saltPerception()
+                sensorPerception()
                 if gSalt < MID_SALT_THRESHOLD:
                     break
                 else:
@@ -361,7 +361,7 @@ def saltOperation():
         while gSalt < MID_SALT_THRESHOLD:
             warningForLowSalt()
             time.sleep(10) ### USER_DEFINE ###
-            saltPerception()
+            sensorPerception()
         gAbnormalState['abnormalSalt'] = False
 
 def phOperation():
@@ -375,7 +375,7 @@ def phOperation():
                 circulation()
                 time.sleep(2) ### USER_DEFINE ###
             else:
-                phPerception()
+                sensorPerception()
                 if gPH < HIGH_PH_THRESHOLD_2 and \
                 gPH > LOW_PH_THRESHOLD_2:
                     break
@@ -394,7 +394,7 @@ def orpOperation():
                     circulation()
                     time.sleep(2) ### USER_DEFINE ###
             else:
-                orpPerception()
+                sensorPerception()
                 if gORP > HIGH_ORP_THRESHOLD:
                     break
                 else:
@@ -405,19 +405,14 @@ def sensorOperation():
     print("Abnormal State Operation")
     if gAbnormalState['abnormalORP'] == True:
         orpOperation()
-        gAbnormalState['abnormalORP'] = False
     if gAbnormalState['abnormalPH'] == True:
         phOperation()
-        gAbnormalState['abnormalPH'] = False
     if gAbnormalState['abnormalTemperature'] == True:
         temperatureOperation()
-        gAbnormalState['abnormalTemperature'] = False
     if gAbnormalState['abnormalOxygen'] == True:
         oxygenOperation()
-        gAbnormalState['abnormalOxygen'] = False
     if gAbnormalState['abnormalSalt'] == True:
         saltOperation()
-        gAbnormalState['abnormalSalt'] = False
 
 def main():
     while True:
