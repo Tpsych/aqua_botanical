@@ -334,7 +334,7 @@ def oxygenOperation():
     if gOxygen < LOW_OXYGEN_THRESHOLD:
         pumpOxygen(1)
         while gOxygen < HIGH_OXYGEN_THRESHOLD:
-            time.sleep(10) ### USER_DEFINE ###
+            time.sleep(3) ### USER_DEFINE ###
             sensorPerception()
         pumpOxygen(0)
         gAbnormalState['abnormalOxygen'] = False
