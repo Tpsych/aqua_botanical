@@ -226,6 +226,7 @@ def checkFeedingTankWaterLevel(expectedLevel):
         time.sleep(5) ### USER_DEFINE ###
 
 def waterLevelJudgementFirstStepInCirculation():
+    sensorPerception()
     print("Enter first step circulation")
     print("gFeedingTankWaterLevel in first circulation is: " + str(gFeedingTankWaterLevel))
     print("gFilteringTankWaterLevel in first circulation is: " + str(gFilteringTankWaterLevel))
@@ -255,6 +256,7 @@ def waterLevelJudgementFirstStepInCirculation():
         fillingMotorControl(0)
 
 def waterLevelJudgementSecondStepInCirculation():
+    sensorPerception()
     print("Enter second step circulation")
     print("gFeedingTankWaterLevel in second circulation is: " + str(gFeedingTankWaterLevel))
     print("gFilteringTankWaterLevel in second circulation is: " + str(gFilteringTankWaterLevel))
