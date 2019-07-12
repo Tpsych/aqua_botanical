@@ -170,7 +170,10 @@ def saltPerception():
         gAbnormalState['abnormalSalt'] = True
 
 def pumpOxygen(command):
-    print("Pump Oxygen")
+    if command == 1:
+        print("Pump Oxygen")
+    else:
+        print("Stop pumping Oxygen")
     monitor1.writePump(command)
 
 #Turn on/off heater
