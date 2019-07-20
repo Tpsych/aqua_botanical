@@ -356,6 +356,7 @@ def saltOperation():
                     time.sleep(2) ### USER_DEFINE ###
             else:
                 sensorPerception()
+                print("Dbg: Salt value is: " + str(gSalt))
                 if gSalt < MID_SALT_THRESHOLD:
                     break
                 else:
