@@ -4,7 +4,7 @@ from sensor_monitor import *
 
 def operation():
     # communication setting
-    PORT_NAME = '/dev/ttyUSB0'
+    PORT_NAME = '/dev/ttyp0'
     BAUDRATE = 9600
 
     # part id
@@ -22,6 +22,7 @@ def operation():
     PUMP_ID = 7
     FEEDIND_MOTOR_ID = 6
     FILTERING_MOTOR_ID = 5
+    BUZZER_ID = 8
 
     # box 2
     BOX2_ID = 98
@@ -29,13 +30,13 @@ def operation():
     FILLING_MOTOR_ID = 1
     LED_ID = 2
     MAGNETIC_DOOR_ID = 4
-    BUZZER_ID = 5
 
     # init monitor
     box1_sensors_id = Box1SensorAssignment(ORP_ID, PH_ID, TEMP_ID, OXYGEN_ID, SALT_ID,\
         WATER1_HIGH_ID, WATER1_LOW_ID, WATER2_HIGH_ID, WATER2_LOW_ID)
-    box1_actuators_id = Box1ActuatorAssignment(PUMP_ID, FEEDIND_MOTOR_ID, FILTERING_MOTOR_ID)
-    box2_actuators_id = Box2ActuatorAssignment(HEATER_ID, FILLING_MOTOR_ID, LED_ID, MAGNETIC_DOOR_ID, BUZZER_ID)
+    box1_actuators_id = Box1ActuatorAssignment(PUMP_ID, FEEDIND_MOTOR_ID, FILTERING_MOTOR_ID, BUZZER_ID)
+    box2_actuators_id = Box2ActuatorAssignment(HEATER_ID, FILLING_MOTOR_ID, LED_ID, MAGNETIC_DOOR_ID)
+
     monitor1 = Monitor1(PORT_NAME, BAUDRATE, BOX1_ID, box1_sensors_id, box1_actuators_id)
     monitor2 = Monitor2(PORT_NAME, BAUDRATE, BOX2_ID, box2_actuators_id)
 
@@ -77,6 +78,7 @@ def operation():
         print("write Pump:", monitor1.writePump(value_for_testing_box1))
         print("write FeedingMotor:", monitor1.writeFeedingMotor(value_for_testing_box1))
         print("write FilteringMotor:", monitor1.writeFilteringMotor(value_for_testing_box1))
+        print("write Buzzer:", monitor1.writeBuzzer(value_for_testing_box1))
 
     # box2 test
     if box2_type_list != None:
@@ -88,7 +90,6 @@ def operation():
         print("write FillingMotor:", monitor2.writeFillingMotor(value_for_testing_box2))
         print("write MagneticDoor:", monitor2.writeMagneticDoor(value_for_testing_box2))
         print("write LED:", monitor2.writeLED(value_for_testing_box2))
-        print("write Buzzer:", monitor2.writeBuzzer(value_for_testing_box2))
 
 def main():
     print("Aqua Botanical Actuator Drive!")

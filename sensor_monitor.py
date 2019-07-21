@@ -17,18 +17,18 @@ class Box1SensorAssignment():
         self.water2_low = water2_low_id
 
 class Box1ActuatorAssignment():
-    def __init__(self, pump_id, feeding_motor_id, filtering_motor_id):
+    def __init__(self, pump_id, feeding_motor_id, filtering_motor_id, buzzer_id):
         self.pump = pump_id
         self.feeding_motor = feeding_motor_id
         self.filtering_motor = filtering_motor_id
+        self.buzzer = buzzer_id
 
 class Box2ActuatorAssignment():
-    def __init__(self, heater_id, filling_motor_id, led_id, magnetic_door_id, buzzer_id):
+    def __init__(self, heater_id, filling_motor_id, led_id, magnetic_door_id):
         self.heater = heater_id
         self.led = led_id
         self.filling_motor = filling_motor_id
         self.magnetic_door = magnetic_door_id
-        self.buzzer = buzzer_id
 
 class Monitor1:
     def __init__(self, port_name, baudrate, box_id, sensors_id, actuators_id):
@@ -132,6 +132,13 @@ class Monitor1:
             print("FilteringMotor control parameter fault")
             return
 
+    def writeBuzzer(self, value):
+        if value == 0 or value == 1:
+            return self.modbus.registerWrite(self.actuators_id.buzzer, value)
+        else:
+            print("Buzzer control parameter fault")
+            return
+
 class Monitor2:
     def __init__(self, port_name, baudrate, box_id, actuators_id):
         self.modbus = Modbus(port_name, baudrate, box_id)
@@ -163,11 +170,4 @@ class Monitor2:
             return self.modbus.registerWrite(self.actuators_id.led, value)
         else:
             print("LED control parameter fault")
-            return
-
-    def writeBuzzer(self, value):
-        if value == 0 or value == 1:
-            return self.modbus.registerWrite(self.actuators_id.buzzer, value)
-        else:
-            print("Buzzer control parameter fault")
             return
