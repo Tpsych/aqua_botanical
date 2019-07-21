@@ -98,7 +98,7 @@ def orpPerception():
         f.write(strftime("%H:%M:%S") + ' ' + str(gORP) + '\n')
         f.close()
     else:
-        print("File not created")
+        print("Folder orp not created")
 
     if gORP < LOW_ORP_THRESHOLD:
         gAbnormalState['abnormalORP'] = True
@@ -114,7 +114,7 @@ def phPerception():
         f.write(strftime("%H:%M:%S") + ' ' + str(gPH) + '\n')
         f.close()
     else:
-        print("File not created")
+        print("Folder ph not created")
     if gPH > HIGH_PH_THRESHOLD_1 or \
     gPH < LOW_PH_THRESHOLD_1:
         gAbnormalState['abnormalPH'] = True
@@ -130,7 +130,7 @@ def temperaturePerception():
         f.write(strftime("%H:%M:%S") + ' ' + str(gTemperature) + '\n')
         f.close()
     else:
-        print("File not created")
+        print("Folder temperature not created")
 
     if gTemperature > HIGH_TEMPERATURE_THRESHOLD or \
     gTemperature < LOW_TEMPERATURE_THRESHOLD:
@@ -147,7 +147,7 @@ def oxygenPerception():
         f.write(strftime("%H:%M:%S") + ' ' + str(gOxygen) + '\n')
         f.close()
     else:
-        print("File not created")
+        print("Folder oxygen not created")
 
     if gOxygen < LOW_OXYGEN_THRESHOLD:
         gAbnormalState['abnormalOxygen'] = True
@@ -163,7 +163,7 @@ def saltPerception():
         f.write(strftime("%H:%M:%S") + ' ' + str(gSalt) + '\n')
         f.close()
     else:
-        print("File not created")
+        print("Folder salt not created")
 
     if gSalt > HIGH_SALT_THRESHOLD or \
     gSalt < LOW_SALT_THRESHOLD:
@@ -202,6 +202,15 @@ def waterLevelDetection():
     print(gFeedingTankWaterLevel)
     print("Filtering tank level")
     print(gFilteringTankWaterLevel)
+    fileDate = strftime("%m_%d_%Y")
+    fileExist = os.path.isfile("/home/pi/Desktop/sensor_data/" + fileDate + "/water_level")
+    if fileExist:
+        f = open("/home/pi/Desktop/sensor_data/" + fileDate + "/water_level", "a")
+        f.write(strftime("%H:%M:%S") + ' ' + "feeding tank" + ' '+ str(gFeedingTankWaterLevel) + '\n')
+        f.write(strftime("%H:%M:%S") + ' ' + "filtering tank" + ' '+ str(gFilteringTankWaterLevel) + '\n')
+        f.close()
+    else:
+        print("Folder water_level not created")
 
 #Turn on/off motors in feeding/filtering tank
 def motorControl(feedingMotorCommand, filteringMotorCommand):
