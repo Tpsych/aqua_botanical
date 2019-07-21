@@ -219,6 +219,15 @@ def motorControl(feedingMotorCommand, filteringMotorCommand):
     monitor1.writeFeedingMotor(feedingMotorCommand)
     print("Filtering motor command: " + str(filteringMotorCommand))
     monitor1.writeFilteringMotor(filteringMotorCommand)
+    fileDate = strftime("%m_%d_%Y")
+    fileExist = os.path.isfile("/home/pi/Desktop/sensor_data/" + fileDate + "/motor_command")
+    if fileExist:
+        f = open("/home/pi/Desktop/sensor_data/" + fileDate + "/motor_command", "a")
+        f.write(strftime("%H:%M:%S") + ' ' + "feeding tank motor" + ' '+ str(feedingMotorCommand) + '\n')
+        f.write(strftime("%H:%M:%S") + ' ' + "filtering tank motor" + ' '+ str(filteringMotorCommand) + '\n')
+        f.close()
+    else:
+        print("Folder motor_command not created")
 
 #Turn/off filling motor
 def fillingMotorControl(command):
