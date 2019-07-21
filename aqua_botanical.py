@@ -342,6 +342,7 @@ def oxygenOperation():
             print("Dbg: Oxygen value is: " + str(gOxygen))
             time.sleep(3) ### USER_DEFINE ###
             sensorPerception()
+            gOxygen = monitor1.readOxygen()
         pumpOxygen(0)
         gAbnormalState['abnormalOxygen'] = False
 
