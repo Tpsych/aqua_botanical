@@ -335,7 +335,7 @@ def temperatureOperation():
 
 def oxygenOperation():
     print("Abnormal oxygen operation")
-    global gOxygen
+    gOxygen = monitor1.readOxygen()
     if gOxygen < LOW_OXYGEN_THRESHOLD:
         pumpOxygen(1)
         while gOxygen < HIGH_OXYGEN_THRESHOLD:
@@ -356,7 +356,6 @@ def saltOperation():
                     time.sleep(2) ### USER_DEFINE ###
             else:
                 sensorPerception()
-                print("Dbg: Salt value is: " + str(gSalt))
                 if gSalt < MID_SALT_THRESHOLD:
                     break
                 else:
