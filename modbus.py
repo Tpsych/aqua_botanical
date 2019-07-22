@@ -96,6 +96,45 @@ class Modbus:
                 print("response value:", value)
             return value
 
+    def registerHighDataRead(self, registeraddress, signed = True):
+        request = '\x00'
+        request += chr(int(registeraddress))
+        request += '\x00\x01'
+        answer = self.instrument._performCommand(3, request)
+
+        if answer == None:
+            return
+        else:
+            data_num = int(ord(answer[0]))
+            value = int(ord(answer[1]))
+
+            if signed == True:
+                value = twos_complement(hex(int(value)), 16)
+
+            if self.instrument.debug:
+                print("response value:", value)
+            return value
+
+    def registerLowDataRead(self, registeraddress, signed = True):
+        request = '\x00'
+        request += chr(int(registeraddress))
+        request += '\x00\x01'
+        answer = self.instrument._performCommand(3, request)
+
+        if answer == None:
+            return
+        else:
+            value = 0
+            data_num = int(ord(answer[0]))
+            value = int(ord(answer[2]))
+
+            if signed == True:
+                value = twos_complement(hex(int(value)), 16)
+
+            if self.instrument.debug:
+                print("response value:", value)
+            return value
+
     def registerWrite(self, registeraddress, value):
         if value > 65535 or value < 0:
             print("value parameter fault")

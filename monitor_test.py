@@ -30,12 +30,17 @@ def operation():
     FILLING_MOTOR_ID = 1
     LED_ID = 2
     MAGNETIC_DOOR_ID = 4
+    GROUP1_ID = 5
+    GROUP2_ID = 6
+    GROUP3_ID = 7
+    GROUP4_ID = 8
 
     # init monitor
     box1_sensors_id = Box1SensorAssignment(ORP_ID, PH_ID, TEMP_ID, OXYGEN_ID, SALT_ID,\
         WATER1_HIGH_ID, WATER1_LOW_ID, WATER2_HIGH_ID, WATER2_LOW_ID)
     box1_actuators_id = Box1ActuatorAssignment(PUMP_ID, FEEDIND_MOTOR_ID, FILTERING_MOTOR_ID, BUZZER_ID)
-    box2_actuators_id = Box2ActuatorAssignment(HEATER_ID, FILLING_MOTOR_ID, LED_ID, MAGNETIC_DOOR_ID)
+    box2_actuators_id = Box2ActuatorAssignment(HEATER_ID, FILLING_MOTOR_ID, LED_ID,\
+        MAGNETIC_DOOR_ID, GROUP1_ID, GROUP2_ID, GROUP3_ID, GROUP4_ID)
 
     monitor1 = Monitor1(PORT_NAME, BAUDRATE, BOX1_ID, box1_sensors_id, box1_actuators_id)
     monitor2 = Monitor2(PORT_NAME, BAUDRATE, BOX2_ID, box2_actuators_id)
@@ -90,6 +95,12 @@ def operation():
         print("write FillingMotor:", monitor2.writeFillingMotor(value_for_testing_box2))
         print("write MagneticDoor:", monitor2.writeMagneticDoor(value_for_testing_box2))
         print("write LED:", monitor2.writeLED(value_for_testing_box2))
+        print("read FillingMotorStatus:", monitor2.readFillingMotorStatus())
+        print("read HeaterStatus:", monitor2.readHeaterStatus())
+        print("read MagneticDoorStatus:", monitor2.readMagneticDoorStatus())
+        print("read PumpStatus:", monitor2.readPumpStatus())
+        print("read FeedingMotorStatus:", monitor2.readFeedingMotorStatus())
+        print("read FilteringMotorStatus:", monitor2.readFilteringMotorStatus())
 
 def main():
     print("Aqua Botanical Actuator Drive!")
