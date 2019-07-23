@@ -449,6 +449,7 @@ def sensorOperation():
         saltOperation()
 
 def main():
+    monitor2.writeLED(1)
     while True:
         print("Aqua Botanical System!")
         restartFlag = False
