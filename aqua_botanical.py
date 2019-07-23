@@ -329,7 +329,7 @@ def sensorPerception():
 
 def temperatureOperation():
     print("Abnormal temperature operation")
-    global gTemperature
+    gTemperature = monitor1.readtemp()
     if gTemperature > HIGH_TEMPERATURE_THRESHOLD:
         timeout = time.time() + 30 ### USER_DEFINE ###
         while True:
@@ -338,6 +338,7 @@ def temperatureOperation():
                 time.sleep(2) ### USER_DEFINE ###
             else:
                 sensorPerception()
+                gTemperature = monitor1.readtemp()
                 if gTemperature < MID_TEMPERATURE_THRESHOLD:
                     break
                 else:
@@ -353,6 +354,7 @@ def temperatureOperation():
                 time.sleep(2) ### USER_DEFINE ###
             else:
                 sensorPerception()
+                gTemperature = monitor1.readtemp()
                 if gTemperature > MID_TEMPERATURE_THRESHOLD:
                     break
                 else:
@@ -375,7 +377,7 @@ def oxygenOperation():
 
 def saltOperation():
     print("Abnormal salt operation")
-    global gSalt
+    gSalt = monitor1.readSalt()
     if gSalt > HIGH_SALT_THRESHOLD:
         timeout = time.time() + 30 ### USER_DEFINE ###
         while True:
@@ -384,6 +386,7 @@ def saltOperation():
                     time.sleep(2) ### USER_DEFINE ###
             else:
                 sensorPerception()
+                gSalt = monitor1.readSalt()
                 if gSalt < MID_SALT_THRESHOLD:
                     break
                 else:
@@ -400,7 +403,7 @@ def saltOperation():
 
 def phOperation():
     print("Abnormal ph operation")
-    global gPH
+    gPH = monitor1.readPH()
     if gPH > HIGH_PH_THRESHOLD_1 or \
     gPH < LOW_PH_THRESHOLD_1:
         timeout = time.time() + 30 ### USER_DEFINE ###
@@ -410,6 +413,7 @@ def phOperation():
                 time.sleep(2) ### USER_DEFINE ###
             else:
                 sensorPerception()
+                gPH = monitor1.readPH()
                 if gPH < HIGH_PH_THRESHOLD_2 and \
                 gPH > LOW_PH_THRESHOLD_2:
                     break
@@ -419,7 +423,7 @@ def phOperation():
 
 def orpOperation():
     print("Abnormal orp operation")
-    global gORP
+    gORP = monitor1.readORP()
     print("Current value is: " + str(gORP))
     if gORP < LOW_ORP_THRESHOLD:
         timeout = time.time() + 30 ### USER_DEFINE ###
@@ -429,6 +433,7 @@ def orpOperation():
                     time.sleep(2) ### USER_DEFINE ###
             else:
                 sensorPerception()
+                gORP = monitor1.readORP()
                 if gORP > HIGH_ORP_THRESHOLD:
                     break
                 else:
