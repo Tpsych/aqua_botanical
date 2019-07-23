@@ -5,6 +5,7 @@ from sensor_monitor import *
 from time import *
 import os.path
 import time
+import sys
 
 #Sensor Info
 PORT_NAME = '/dev/ttyUSB0'
@@ -456,34 +457,38 @@ def sensorOperation():
 def main():
     monitor2.writeLED(1)
     while True:
-        print("Aqua Botanical System!")
-        restartFlag = False
-        timeout = time.time() + 40 ### USER_DEFINE ###
-        while time.time() < timeout:
-            if gAbnormalState['abnormalORP'] == False and \
-            gAbnormalState['abnormalPH'] == False and \
-            gAbnormalState['abnormalTemperature'] == False and \
-            gAbnormalState['abnormalOxygen'] == False and \
-            gAbnormalState['abnormalSalt'] == False:
-                time.sleep(5)
-                sensorPerception()
-            else:
-                sensorOperation()
-                restartFlag = True
-                print("Restart circulation")
-                break
-        if restartFlag == False:
-            timeout = time.time() + 30 ### USER_DEFINE ###
+        try:
+            print("Aqua Botanical System!")
+            restartFlag = False
+            timeout = time.time() + 40 ### USER_DEFINE ###
             while time.time() < timeout:
-                time.sleep(5) ### USER_DEFINE ###
-                circulation()
-            waterLevelDetection()
-            while gFeedingTankWaterLevel != 1 and gFilteringTankWaterLevel != 1:
-                waterLevelJudgementSecondStepInCirculation()
-                time.sleep(5) ### USER_DEFINE ###
+                if gAbnormalState['abnormalORP'] == False and \
+                gAbnormalState['abnormalPH'] == False and \
+                gAbnormalState['abnormalTemperature'] == False and \
+                gAbnormalState['abnormalOxygen'] == False and \
+                gAbnormalState['abnormalSalt'] == False:
+                    time.sleep(5)
+                    sensorPerception()
+                else:
+                    sensorOperation()
+                    restartFlag = True
+                    print("Restart circulation")
+                    break
+            if restartFlag == False:
+                timeout = time.time() + 30 ### USER_DEFINE ###
+                while time.time() < timeout:
+                    time.sleep(5) ### USER_DEFINE ###
+                    circulation()
                 waterLevelDetection()
-            motorControl(0, 0)
-            print("Restart circulation")
+                while gFeedingTankWaterLevel != 1 and gFilteringTankWaterLevel != 1:
+                    waterLevelJudgementSecondStepInCirculation()
+                    time.sleep(5) ### USER_DEFINE ###
+                    waterLevelDetection()
+                motorControl(0, 0)
+                print("Restart circulation")
+        except KeyboardInterrupt:
+            monitor2.writeLED(0)
+            sys.exit()
 
 if __name__ == "__main__":
     main()
