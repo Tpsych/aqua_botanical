@@ -23,6 +23,13 @@ class Box1ActuatorAssignment():
         self.filtering_motor = filtering_motor_id
         self.buzzer = buzzer_id
 
+class Box2SensorAssignment():
+    def __init__(self, group1_id, group2_id, group3_id, group4_id):
+        self.group1_id = group1_id
+        self.group2_id = group2_id
+        self.group3_id = group3_id
+        self.group4_id = group4_id
+
 class Box2ActuatorAssignment():
     def __init__(self, heater_id, filling_motor_id, led_id, magnetic_door_id, group1_id, group2_id, group3_id, group4_id):
         self.heater = heater_id
@@ -144,8 +151,9 @@ class Monitor1:
             return
 
 class Monitor2:
-    def __init__(self, port_name, baudrate, box_id, actuators_id):
+    def __init__(self, port_name, baudrate, box_id, sensors_id, actuators_id):
         self.modbus = Modbus(port_name, baudrate, box_id)
+        self.sensors_id = sensors_id
         self.actuators_id = actuators_id
 
     def readFillingMotorStatus(self):

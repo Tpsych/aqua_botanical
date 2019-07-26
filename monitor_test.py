@@ -39,11 +39,12 @@ def operation():
     box1_sensors_id = Box1SensorAssignment(ORP_ID, PH_ID, TEMP_ID, OXYGEN_ID, SALT_ID,\
         WATER1_HIGH_ID, WATER1_LOW_ID, WATER2_HIGH_ID, WATER2_LOW_ID)
     box1_actuators_id = Box1ActuatorAssignment(PUMP_ID, FEEDIND_MOTOR_ID, FILTERING_MOTOR_ID, BUZZER_ID)
+    box2_sensors_id = Box2SensorAssignment(GROUP1_ID, GROUP2_ID, GROUP3_ID, GROUP4_ID)
     box2_actuators_id = Box2ActuatorAssignment(HEATER_ID, FILLING_MOTOR_ID, LED_ID,\
         MAGNETIC_DOOR_ID, GROUP1_ID, GROUP2_ID, GROUP3_ID, GROUP4_ID)
 
     monitor1 = Monitor1(PORT_NAME, BAUDRATE, BOX1_ID, box1_sensors_id, box1_actuators_id)
-    monitor2 = Monitor2(PORT_NAME, BAUDRATE, BOX2_ID, box2_actuators_id)
+    monitor2 = Monitor2(PORT_NAME, BAUDRATE, BOX2_ID, box2_sensors_id, box2_actuators_id)
 
     # test
     box1_type_list = monitor1.modbus.checkIOBoardType(0xE0)
