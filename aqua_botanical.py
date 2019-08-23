@@ -95,9 +95,9 @@ def warningForLowSalt():
     warningBuzzer(0)
 
 def orpPerception():
-    print("ORP perception, the orp value now is: ")
-    print(monitor1.readORP())
     gORP = monitor1.readORP()
+    print("ORP perception, the orp value now is: ")
+    print(gORP)
     fileDate = strftime("%m_%d_%Y")
     fileExist = os.path.isfile("/home/pi/Desktop/sensor_data/" + fileDate + "/orp")
     if fileExist:
@@ -111,9 +111,9 @@ def orpPerception():
         gAbnormalState['abnormalORP'] = True
 
 def phPerception():
-    print("PH perception, the ph value now is: ")
-    print(monitor1.readPH())
     gPH = monitor1.readPH()
+    print("PH perception, the ph value now is: ")
+    print(gPH)
     fileDate = strftime("%m_%d_%Y")
     fileExist = os.path.isfile("/home/pi/Desktop/sensor_data/" + fileDate + "/ph")
     if fileExist:
@@ -127,9 +127,9 @@ def phPerception():
         gAbnormalState['abnormalPH'] = True
 
 def temperaturePerception():
-    print("Temperature perception, the temperature value now is: ")
-    print(monitor1.readtemp())
     gTemperature = monitor1.readtemp()
+    print("Temperature perception, the temperature value now is: ")
+    print(gTemperature)
     fileDate = strftime("%m_%d_%Y")
     fileExist = os.path.isfile("/home/pi/Desktop/sensor_data/" + fileDate + "/temperature")
     if fileExist:
@@ -144,9 +144,9 @@ def temperaturePerception():
         gAbnormalState['abnormalTemperature'] = True
 
 def oxygenPerception():
-    print("Oxygen perception, the oxygen value now is: ")
-    print(monitor1.readOxygen())
     gOxygen = monitor1.readOxygen()
+    print("Oxygen perception, the oxygen value now is: ")
+    print(gOxygen)
     fileDate = strftime("%m_%d_%Y")
     fileExist = os.path.isfile("/home/pi/Desktop/sensor_data/" + fileDate + "/oxygen")
     if fileExist:
@@ -160,9 +160,9 @@ def oxygenPerception():
         gAbnormalState['abnormalOxygen'] = True
 
 def saltPerception():
-    print("Salt perception, the salt value now is: ")
-    print(monitor1.readSalt())
     gSalt = monitor1.readSalt()
+    print("Salt perception, the salt value now is: ")
+    print(gSalt)
     fileDate = strftime("%m_%d_%Y")
     fileExist = os.path.isfile("/home/pi/Desktop/sensor_data/" + fileDate + "/salt")
     if fileExist:
