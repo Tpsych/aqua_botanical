@@ -205,9 +205,9 @@ def waterLevelDetection():
         gFilteringTankWaterLevel = 1
     else:
         gFilteringTankWaterLevel = 2
-    print("Feeding tank level")
+    print("Feeding tank level now is: ")
     print(gFeedingTankWaterLevel)
-    print("Filtering tank level")
+    print("Filtering tank level now is:")
     print(gFilteringTankWaterLevel)
     fileDate = strftime("%m_%d_%Y")
     fileExist = os.path.isfile("/home/pi/Desktop/sensor_data/" + fileDate + "/water_level")
@@ -242,13 +242,13 @@ def motorControl(feedingMotorCommand, filteringMotorCommand):
 
 #Turn/off filling motor
 def fillingMotorControl(command):
-    print("Filling Motor Control")
+    print("Filling Motor Control command is: ")
     print(command)
     monitor2.writeFillingMotor(command)
 
 #Turn on/off electrical Door
 def electricalMagneticDoor(command):
-    print("Electrical magnetic door")
+    print("Electrical magnetic door command now is: ")
     print(command)
     monitor2.writeMagneticDoor(command)
 
