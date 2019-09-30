@@ -255,7 +255,7 @@ def electricalMagneticDoor(command):
 def checkFeedingTankWaterLevel(expectedLevel):
     while gFeedingTankWaterLevel != expectedLevel:
         waterLevelDetection()
-        time.sleep(5) ### USER_DEFINE ###
+        time.sleep(3) ### USER_DEFINE ###
 
 def waterLevelJudgementFirstStepInCirculation():
     sensorPerception()
